@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,
+  redirect,
   RouterProvider,
 } from "react-router-dom";
 import "./index.css";
@@ -11,12 +12,16 @@ import Login from "./pages/Login";
 const router = createBrowserRouter([
   {
     path: "/login",
-    element: <Login/>,
+    element: <Login />,
+    index: true
   },
   {
     path: "/",
-    element: <Home/>,
+    element: <Home />,
+
   },
+
+
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

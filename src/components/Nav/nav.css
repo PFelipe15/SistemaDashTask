@@ -12,12 +12,14 @@
     margin-right: 27px;
     margin-left: 35px;
     background-color: #426247;
-    
+
 }
 
 .menu #perfilId {
     margin-top: 32px;
     border-radius: 50%;
+    width: 100px;
+    height: 100px;
 }
 
 
@@ -39,7 +41,7 @@
     list-style: none;
 }
 
-.menu-nav ul li:hover{
+.menu-nav ul li:hover {
     border-right: 2px solid var(--text-primarycolor);
 }
 

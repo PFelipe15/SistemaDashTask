@@ -4,12 +4,13 @@ import Vector from '../../assets/Vector.svg'
 import buttonSeta from '../../assets/SetaRight.svg'
 import buttonCheck from '../../assets/check.svg'
 import buttonPen from '../../assets/Caneta.svg'
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import './home.css';
 import { ToastContainer, toast } from 'react-toastify'
 import { collection, doc, setDoc, getDoc, getDocs, updateDoc } from "firebase/firestore";
 import { app, db } from '../../services/firebaseConection';
 function Home() {
-
+    const [user, setUser] = useState(getAuth().currentUser)
     const [cards, setCards] = useState([])
     const [isLoading, setIsLoading] = useState(true);
 
@@ -33,8 +34,6 @@ function Home() {
 
     }
 
-
-
     let handleLimit = () => {
         let p = document.querySelectorAll('.card p')
         const limit = 80
@@ -49,10 +48,9 @@ function Home() {
             const lista = []
             const querySnapshot = await getDocs(collection(db, "tasks"));
             querySnapshot.forEach((doc) => {
-             const data = doc.data();
+                const data = doc.data();
                 data.id = doc.id;
                 lista.push(data);
-
                 setCards(lista)
                 setIsLoading(false)
 
@@ -74,7 +72,7 @@ function Home() {
             <div className="main">
                 <div className="main-header">
                     <div className="title-kaban">
-                        <h1>Paulo Felipe</h1>
+                        <h1>{user.displayName}</h1>
                     </div>
 
                 </div>
@@ -135,7 +133,7 @@ function Home() {
                                                 <small> {el}</small>
                                             ))}
                                         </div>
-                                        <button type={'submit'} onClick={() => { handleClickTask(el.id) }}><img src={buttonCheck} alt="" /></button>
+                                        <button type={'submit'} onClick={() => { getUser() }}><img src={buttonCheck} alt="" /></button>
                                     </div>
                                 </div>
                             ))

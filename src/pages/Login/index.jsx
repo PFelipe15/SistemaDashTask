@@ -1,14 +1,45 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import LoginsData from '../../data/loginData';
-
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import './login.css';
+import { auth } from '../../services/firebaseConection';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
+    const navigate = useNavigate()
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useSignInWithEmailAndPassword(auth);
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    let navigate = useNavigate()
+    async function handleLogin() {
+        if (!email || !password) {
+           return toast.warning("Dados não informados!");
+        }
+
+        let login = await signInWithEmailAndPassword(email, password)
+        if (login) {
+
+            navigate("/home")
+        }
+
+
+        else {
+            toast.error("Usuario não encontrado!");
+        }
+    }
+
+
+
+
+
+
+
     function heandleEyeToClose() {
 
         let eyeNone = document.querySelector('.eye-none')
@@ -25,21 +56,6 @@ function Login() {
         eyeNone.style.visibility = 'visible'
         eyeOpen.style.visibility = 'hidden'
         document.querySelector('.passwordEye').type = "password"
-    }
-    function handleLogin() {
-
-        if (!email || !password) {
-            alert("Dados n foram informados!")
-            return
-        }
-        let userExist = LoginsData.find((el) => el.email === email)
-        if (userExist && userExist.password === password) {
-            alert('Bem vindo')
-            navigate('/')
-        }
-        else {
-            alert("Senha Incorreta ou Email não cadastrado!")
-        }
     }
 
     return <div>
@@ -74,7 +90,7 @@ function Login() {
                             <button class="btnEntrar" onClick={() => {
                                 handleLogin()
                             }}>Entrar</button>
-
+                            <ToastContainer />
 
                         </div>
                     </div>

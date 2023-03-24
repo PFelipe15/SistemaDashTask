@@ -145,7 +145,6 @@ a {
 
 .main-filter {
   display: flex;
-
   padding-left: 24px;
   align-items: center;
   gap: 16px;
@@ -217,10 +216,21 @@ a {
 
 }
 
+.card .footer-card {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card .footer-card button {
+  background-color: transparent;
+  border: none;
+}
+
 .card .tags {
   display: flex;
   gap: 8px;
 }
+
 
 .card .tags small {
   display: flex;

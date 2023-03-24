@@ -11,12 +11,12 @@ import Login from "./pages/Login";
 
 const router = createBrowserRouter([
   {
-    path: "/login",
+    path: "/",
     element: <Login />,
     index: true
   },
   {
-    path: "/",
+    path: "/home",
     element: <Home />,
 
   },

@@ -1,0 +1,235 @@
+:root {
+  --background: #426247;
+  --text-primarycolor: #403937;
+  --color-background: #F8FAFC;
+  --text-color-primary: #403937;
+  --text-color-ligth: #475569;
+
+}
+
+.container-home {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--background);
+  display: flex;
+
+}
+
+:root {
+  --background: #426247;
+  --text-primarycolor: #403937;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
+
+.App {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--background);
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  flex-direction: row;
+}
+
+
+
+.menu {
+  width: 175px;
+  height: 100%;
+  margin-right: 27px;
+  margin-left: 35px;
+}
+
+
+
+.menu #logoId {
+  margin-top: 32px;
+
+}
+
+.menu .menu-nav {
+  margin-top: 60px;
+
+}
+
+.menu-nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+
+}
+
+.menu-nav ul li {
+  display: flex;
+  list-style: none;
+}
+
+.menu-nav ul li button {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  gap: 16px;
+  transition: all 1.3s;
+}
+
+.menu-nav ul li button:hover {
+  transform: scale(1.1);
+
+}
+
+
+.main-container {
+  display: flex;
+  width: 100%;
+  background: #FBFAFF;
+  border-radius: 32px 0px 0px 0px;
+}
+
+.main {
+  width: 100%;
+  margin: 0 32px;
+}
+
+.main-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin: 48px 0;
+  height: 64px;
+
+}
+
+.main-header img {
+  border-radius: 50%;
+  transition: all 2.3s;
+}
+
+.main-header img:hover {
+  transform: scale(1.5);
+  border: 1px solid var(--background);
+
+}
+
+.main-header .title-kaban {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  color: var(--text-primarycolor);
+  padding-left: 24px;
+}
+
+.title-kaban button {
+  background-color: transparent;
+  border: none;
+}
+
+.main-filter {
+  display: flex;
+
+  padding-left: 24px;
+  align-items: center;
+  gap: 16px;
+}
+
+
+
+
+
+.main-kanbans {
+  width: 100%;
+  margin-top: 32px;
+  padding-left: 24px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.container-card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+
+
+}
+
+.container-card h1 {
+  font-weight: bold;
+  font-size: 20px;
+  color: var(--text-primarycolor);
+}
+
+.card {
+  display: flex;
+  width: 380px;
+  height: 153px;
+  flex-direction: column;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 16px #EAE2FD;
+  border-radius: 8px;
+  justify-content: space-around;
+  padding: 54px 24px;
+  gap: 10px;
+  transition: all 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.1);
+  border: 2px solid rgba(174, 18, 226, 0.1);
+}
+
+.card h3 {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 130%;
+  color: var(--text-primarycolor);
+
+}
+
+.card p {
+
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+
+
+}
+
+.card .tags {
+  display: flex;
+  gap: 8px;
+}
+
+.card .tags small {
+  display: flex;
+  padding: 6px 8px;
+  justify-content: center;
+  background: var(--background);
+  border-radius: 8px;
+  align-items: center;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: bold;
+}

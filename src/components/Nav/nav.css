@@ -1,0 +1,64 @@
+:root {
+    --background: #426247;
+    --text-primarycolor: #403937;
+    --color-background: #F8FAFC;
+    --text-color-primary: #403937;
+    --text-color-ligth: #475569;
+
+}
+
+.menu {
+    width: 175px;
+    margin-right: 27px;
+    margin-left: 35px;
+    background-color: #426247;
+    
+}
+
+.menu #perfilId {
+    margin-top: 32px;
+    border-radius: 50%;
+}
+
+
+
+.menu .menu-nav {
+    margin-top: 60px;
+
+}
+
+.menu-nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+
+}
+
+.menu-nav ul li {
+    display: flex;
+    list-style: none;
+}
+
+.menu-nav ul li:hover{
+    border-right: 2px solid var(--text-primarycolor);
+}
+
+.menu-nav ul li button {
+    background-color: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    gap: 16px;
+    transition: all 1.3s;
+}
+
+.menu-nav ul li button:hover {
+    transform: scale(1.1);
+
+}

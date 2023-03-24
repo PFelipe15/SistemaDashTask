@@ -5,7 +5,8 @@ import './login.css';
 import { auth } from '../../services/firebaseConection';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import eyeOff from '../../assets/eye-off.svg'
+import eyeOff2 from '../../assets/eye-off2.svg'
 function Login() {
     const navigate = useNavigate()
     const [email, setEmail] = useState('');
@@ -19,7 +20,7 @@ function Login() {
 
     async function handleLogin() {
         if (!email || !password) {
-           return toast.warning("Dados não informados!");
+            return toast.warning("Dados não informados!");
         }
 
         let login = await signInWithEmailAndPassword(email, password)
@@ -83,8 +84,8 @@ function Login() {
                                     onChange={(e) => setPassword(e.target.value)}></input>
 
 
-                                <img src='../src/assets/eye-off.svg' class="fa-solid fa-eye-slash eye-none" onClick={() => { heandleEyeToClose() }} />
-                                <img src='../src/assets/eye-off2.svg' class="fa-solid fa-eye eye-open" onClick={() => { heandleEyeToOpen() }} />
+                                <img src={eyeOff} class="fa-solid fa-eye-slash eye-none" onClick={() => { heandleEyeToClose() }} />
+                                <img src={eyeOff2} class="fa-solid fa-eye eye-open" onClick={() => { heandleEyeToOpen() }} />
 
                             </div>
                             <button class="btnEntrar" onClick={() => {

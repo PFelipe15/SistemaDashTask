@@ -12,7 +12,6 @@
     margin-right: 27px;
     margin-left: 35px;
     background-color: #426247;
-
 }
 
 .menu #perfilId {
@@ -39,6 +38,7 @@
 .menu-nav ul li {
     display: flex;
     list-style: none;
+
 }
 
 .menu-nav ul li:hover {
@@ -58,9 +58,34 @@
     font-family: 'Inter', sans-serif;
     gap: 16px;
     transition: all 1.3s;
+
 }
 
 .menu-nav ul li button:hover {
     transform: scale(1.1);
+
+}
+
+.menu-nav ul .toggleMobile {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .menu {
+       
+        width: auto !important;
+    }
+
+    .menu #perfilId {
+        display: none;
+    }
+
+    .menu-nav ul .toggleDesktop {
+        display: none;
+    }
+
+    .menu-nav ul .toggleMobile {
+        display: flex;
+    }
 
 }

@@ -14,12 +14,15 @@ function NavMenu() {
 
             <div className="menu-nav">
                 <ul>
-                    <li><button><img src={tablet} alt="" />Boards</button>  </li>
-                    <li><button><img src={people} alt="" />Equipes</button></li>
-                    <li><button><img src={cog} alt="" />Ajustes</button></li>
+                    <li className='toggleDesktop' ><button><img src={tablet} alt="" />Boards</button>  </li>
+                    <li className='toggleDesktop'><button><img src={people} alt="" />Equipes</button></li>
+                    <li className='toggleDesktop'><button><img src={cog} alt="" />Ajustes</button></li>
+                    <li className='toggleMobile'><button><img src={tablet} alt="" /></button>  </li>
+                    <li className='toggleMobile' ><button><img src={people} alt="" /></button></li>
+                    <li className='toggleMobile'><button><img src={cog} alt="" /></button></li>
                 </ul>
             </div>
-            
+
         </div>);
 }
 

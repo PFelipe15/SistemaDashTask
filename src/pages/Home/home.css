@@ -12,7 +12,7 @@
   height: 100vh;
   background-color: var(--background);
   display: flex;
-
+ 
 }
 
 :root {
@@ -34,74 +34,30 @@ a {
   text-decoration: none;
 }
 
-.App {
-  width: 100vw;
-  height: 100vh;
-  background-color: var(--background);
-  font-family: 'Inter', sans-serif;
-  display: flex;
-  flex-direction: row;
-}
 
 
 
-.menu {
-  width: 175px;
-  height: 100%;
-  margin-right: 27px;
-  margin-left: 35px;
-}
 
 
 
-.menu #logoId {
-  margin-top: 32px;
 
-}
 
-.menu .menu-nav {
-  margin-top: 60px;
 
-}
 
-.menu-nav ul {
-  display: flex;
-  flex-direction: column;
-  gap: 36px;
 
-}
 
-.menu-nav ul li {
-  display: flex;
-  list-style: none;
-}
 
-.menu-nav ul li button {
-  background-color: transparent;
-  border: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  color: #fff;
-  font-family: 'Inter', sans-serif;
-  gap: 16px;
-  transition: all 1.3s;
-}
 
-.menu-nav ul li button:hover {
-  transform: scale(1.1);
 
-}
 
 
 .main-container {
   display: flex;
-  width: 100%;
+  width: 100vw;
   background: #FBFAFF;
   border-radius: 32px 0px 0px 0px;
+  height: 100%;
+
 }
 
 .main {
@@ -143,17 +99,6 @@ a {
   border: none;
 }
 
-.main-filter {
-  display: flex;
-  padding-left: 24px;
-  align-items: center;
-  gap: 16px;
-}
-
-
-
-
-
 .main-kanbans {
   width: 100%;
   height: 100%;
@@ -161,7 +106,7 @@ a {
   padding-left: 24px;
   display: flex;
   justify-content: space-between;
- 
+
 }
 
 .container-card {
@@ -171,7 +116,7 @@ a {
   flex-direction: column;
   gap: 24px;
   align-items: center;
- 
+
 
 }
 
@@ -247,4 +192,31 @@ a {
   color: #ffffff;
   font-size: 11px;
   font-weight: bold;
+}
+
+
+
+@media screen and (max-width: 768px) {
+  .main-header {
+    height: auto !important;
+
+
+  }
+
+  .main-kanbans {
+    justify-content: flex-start;
+    flex-direction: column;
+    height: auto !important;
+  }
+
+  .main {
+    padding: 0;
+    margin: 0;
+
+  }
+
+  .container-card {
+    align-items: flex-start;
+
+  }
 }

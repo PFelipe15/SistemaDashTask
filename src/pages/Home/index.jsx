@@ -9,8 +9,12 @@ import './home.css';
 import { ToastContainer, toast } from 'react-toastify'
 import { collection, doc, setDoc, getDoc, getDocs, updateDoc } from "firebase/firestore";
 import { app, db } from '../../services/firebaseConection';
+import { useContext } from 'react';
+import { UserContext } from '../../context/userContext'
 function Home() {
-    const [user, setUser] = useState(getAuth().currentUser)
+
+
+    const { isLogged, setIsLogged } = useContext(UserContext);
     const [cards, setCards] = useState([])
     const [isLoading, setIsLoading] = useState(true);
 
@@ -23,7 +27,6 @@ function Home() {
 
 
     }
-
     async function goToFeitoTask(id) {
         const taskRef = doc(db, "tasks", id);
         await updateDoc(taskRef, {
@@ -58,10 +61,26 @@ function Home() {
 
 
         }
+
+        console.log(isLogged)
+
+        async function getUser() {
+            const auth = getAuth();
+            const user = auth.currentUser;
+
+            if (user !== null) {
+                user.providerData.forEach((profile) => {
+                    console.log("Sign-in provider: " + profile.providerId);
+                    console.log("  Provider-specific UID: " + profile.uid);
+                    console.log("  Name: " + profile.displayName);
+                    console.log("  Email: " + profile.email);
+                    console.log("  Photo URL: " + profile.photoURL);
+                });
+            }
+        }
         getDocument()
         handleLimit()
-
-
+        getUser()
 
     }, [cards])
 
@@ -72,15 +91,15 @@ function Home() {
             <div className="main">
                 <div className="main-header">
                     <div className="title-kaban">
-                        <h1>{user.displayName}</h1>
+                        <h1>Felipe</h1>
                     </div>
 
                 </div>
                 <div className="main-kanbans">
                     <div className='container-card'>
-                        <h1>A fazer</h1>
+                        <h1>A fazer {isLogged}</h1>
                         {
-                            isLoading ? (<p>Carregando</p>) : cards.filter((el) => el.status === "A Fazer").map((el) => (
+                            isLoading || cards.filter((el) => el.status === "A Fazer").length == 0 ? (<p>Não há Tarefas Aqui!</p>) : cards.filter((el) => el.status === "A Fazer").map((el) => (
                                 <div className="card">
                                     <h3>{el.title}</h3>
                                     <p>{el.description}</p>
@@ -101,7 +120,7 @@ function Home() {
                     <div className='container-card'>
                         <h1>Fazendo</h1>
                         {
-                            isLoading ? (<p>Carregando</p>) : cards.filter((el) => el.status === "Fazendo").map((el) => (
+                            isLoading || cards.filter((el) => el.status === "Fazendo").length == 0 ? (<p>Não há Tarefas Aqui!</p>) : cards.filter((el) => el.status === "Fazendo").map((el) => (
                                 <div className="card">
                                     <h3>{el.title}</h3>
                                     <p>{el.description}</p>

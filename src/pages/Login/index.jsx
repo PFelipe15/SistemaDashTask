@@ -10,7 +10,7 @@ import eyeOff2 from '../../assets/eye-off2.svg'
 import { useContext } from 'react';
 import { UserContext } from '../../context/userContext'
 function Login() {
-    const { isLogged, setIsLogged } = useContext(UserContext);
+ 
     const navigate = useNavigate()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -28,7 +28,7 @@ function Login() {
 
         let login = await signInWithEmailAndPassword(email, password)
         if (login) {
-            setIsLogged(true)
+          
             navigate("/home")
         }
 

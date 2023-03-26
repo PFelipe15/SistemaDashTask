@@ -3,7 +3,7 @@ import NavMenu from '../../components/Nav';
 import Vector from '../../assets/Vector.svg'
 import buttonSeta from '../../assets/SetaRight.svg'
 import buttonCheck from '../../assets/check.svg'
-import buttonPen from '../../assets/Caneta.svg'
+import max from '../../assets/max.svg'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import './home.css';
 import { ToastContainer, toast } from 'react-toastify'
@@ -11,12 +11,13 @@ import { collection, doc, setDoc, getDoc, getDocs, updateDoc } from "firebase/fi
 import { app, db } from '../../services/firebaseConection';
 import { useContext } from 'react';
 import { UserContext } from '../../context/userContext'
+import Cards from '../../data/CardData'
 function Home() {
 
 
     const { isLogged, setIsLogged } = useContext(UserContext);
-    const [cards, setCards] = useState([])
-    const [isLoading, setIsLoading] = useState(true);
+    const [cards, setCards] = useState(Cards)
+    const [isLoading, setIsLoading] = useState(false);
 
     async function goToFazendoTask(id) {
         const taskRef = doc(db, "tasks", id);
@@ -48,21 +49,20 @@ function Home() {
     }
     useEffect(() => {
         async function getDocument() {
-            const lista = []
-            const querySnapshot = await getDocs(collection(db, "tasks"));
-            querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                data.id = doc.id;
-                lista.push(data);
-                setCards(lista)
-                setIsLoading(false)
+            //     const lista = []
+            //     const querySnapshot = await getDocs(collection(db, "tasks"));
+            //     querySnapshot.forEach((doc) => {
+            //         const data = doc.data();
+            //         data.id = doc.id;
+            //         lista.push(data);
+            //         setCards(lista)
+            //         setIsLoading(false)
 
-            });
+            //     });
 
 
         }
-
-        console.log(isLogged)
+        setCards(Cards)
 
         async function getUser() {
             const auth = getAuth();
@@ -78,6 +78,9 @@ function Home() {
                 });
             }
         }
+
+
+
         getDocument()
         handleLimit()
         getUser()
@@ -109,7 +112,11 @@ function Home() {
                                                 <small> {el}</small>
                                             ))}
                                         </div>
-                                        <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}><img src={buttonSeta} alt="" /></button>
+                                        <div className="buttons-card">
+
+                                            <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}><img src={max} alt="" /></button>
+                                            <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}><img src={buttonSeta} alt="" /></button>
+                                        </div>
                                     </div>
                                 </div>
                             ))

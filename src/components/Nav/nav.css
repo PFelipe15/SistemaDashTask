@@ -8,10 +8,10 @@
 }
 
 .menu {
-    width: 175px;
+    width: auto;
     margin-right: 27px;
     margin-left: 35px;
-    background-color: #426247;
+ 
 }
 
 .menu #perfilId {
@@ -72,7 +72,7 @@
 
 @media screen and (max-width: 768px) {
     .menu {
-       
+
         width: auto !important;
     }
 

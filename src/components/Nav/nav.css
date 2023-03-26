@@ -11,7 +11,7 @@
     width: auto;
     margin-right: 27px;
     margin-left: 35px;
- 
+
 }
 
 .menu #perfilId {
@@ -72,7 +72,7 @@
 
 @media screen and (max-width: 768px) {
     .menu {
-
+        height: auto !important;
         width: auto !important;
     }
 

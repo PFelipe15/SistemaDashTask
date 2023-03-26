@@ -11,6 +11,7 @@ import { collection, doc, setDoc, getDoc, getDocs, updateDoc } from "firebase/fi
 import { app, db } from '../../services/firebaseConection';
 import { useContext } from 'react';
 import { UserContext } from '../../context/userContext'
+import { Tooltip } from 'react-tooltip'
 import Cards from '../../data/CardData'
 function Home() {
 
@@ -95,86 +96,89 @@ function Home() {
                 <div className="main-header">
                     <div className="title-kaban">
                         <h1>Felipe</h1>
-                    </div>
-
+                        
+                    
                 </div>
-                <div className="main-kanbans">
-                    <div className='container-card'>
-                        <h1>A fazer {isLogged}</h1>
-                        {
-                            isLoading || cards.filter((el) => el.status === "A Fazer").length == 0 ? (<p>Não há Tarefas Aqui!</p>) : cards.filter((el) => el.status === "A Fazer").map((el) => (
-                                <div className="card">
-                                    <h3>{el.title}</h3>
-                                    <p>{el.description}</p>
-                                    <div className="footer-card">
-                                        <div className="tags">
-                                            {el.tags?.map((el) => (
-                                                <small> {el}</small>
-                                            ))}
-                                        </div>
-                                        <div className="buttons-card">
-
-                                            <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}><img src={max} alt="" /></button>
-                                            <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}><img src={buttonSeta} alt="" /></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
-
-                        }
-
-                    </div>
-                    <div className='container-card'>
-                        <h1>Fazendo</h1>
-                        {
-                            isLoading || cards.filter((el) => el.status === "Fazendo").length == 0 ? (<p>Não há Tarefas Aqui!</p>) : cards.filter((el) => el.status === "Fazendo").map((el) => (
-                                <div className="card">
-                                    <h3>{el.title}</h3>
-                                    <p>{el.description}</p>
-                                    <div className="footer-card">
-                                        <div className="tags">
-                                            {el.tags?.map((el) => (
-                                                <small> {el}</small>
-                                            ))}
-                                        </div>
-                                        <button type={'submit'} onClick={() => { goToFeitoTask(el.id) }}><img src={buttonSeta} alt="" /></button>
-                                    </div>
-                                </div>
-                            ))
-
-                        }
-
-                    </div>
-
-                    <div className='container-card'>
-                        <h1>Feito</h1>
-                        {
-                            isLoading ? (<p>Carregando</p>) : cards.filter((el) => el.status === "Feito").map((el) => (
-                                <div className="card">
-                                    <h3>{el.title}</h3>
-                                    <p>{el.description}</p>
-                                    <div className="footer-card">
-                                        <div className="tags">
-                                            {el.tags?.map((el) => (
-                                                <small> {el}</small>
-                                            ))}
-                                        </div>
-                                        <button type={'submit'} onClick={() => { getUser() }}><img src={buttonCheck} alt="" /></button>
-                                    </div>
-                                </div>
-                            ))
-
-                        }
-
-                    </div>
-                </div>
-
-
-                <ToastContainer />
 
             </div>
+            <div className="main-kanbans">
+                <div className='container-card'>
+                    <h1>A fazer {isLogged}</h1>
+                    {
+                        isLoading || cards.filter((el) => el.status === "A Fazer").length == 0 ? (<p>Não há Tarefas Aqui!</p>) : cards.filter((el) => el.status === "A Fazer").map((el) => (
+                            <div className="card">
+                                <h3>{el.title}</h3>
+                                <p>{el.description}</p>
+                                <div className="footer-card">
+                                    <div className="tags">
+                                        {el.tags?.map((el) => (
+                                            <small> {el}</small>
+                                        ))}
+                                    </div>
+                                    <div className="buttons-card">
+
+                                        <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}><img src={max} alt="" /></button>
+                                        
+                                        <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}><img src={buttonSeta} alt="" /></button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+
+                    }
+
+                </div>
+                <div className='container-card'>
+                    <h1>Fazendo</h1>
+                    {
+                        isLoading || cards.filter((el) => el.status === "Fazendo").length == 0 ? (<p>Não há Tarefas Aqui!</p>) : cards.filter((el) => el.status === "Fazendo").map((el) => (
+                            <div className="card">
+                                <h3>{el.title}</h3>
+                                <p>{el.description}</p>
+                                <div className="footer-card">
+                                    <div className="tags">
+                                        {el.tags?.map((el) => (
+                                            <small> {el}</small>
+                                        ))}
+                                    </div>
+                                    <button type={'submit'} onClick={() => { goToFeitoTask(el.id) }}><img src={buttonSeta} alt="" /></button>
+                                </div>
+                            </div>
+                        ))
+
+                    }
+
+                </div>
+
+                <div className='container-card'>
+                    <h1>Feito</h1>
+                    {
+                        isLoading ? (<p>Carregando</p>) : cards.filter((el) => el.status === "Feito").map((el) => (
+                            <div className="card">
+                                <h3>{el.title}</h3>
+                                <p>{el.description}</p>
+                                <div className="footer-card">
+                                    <div className="tags">
+                                        {el.tags?.map((el) => (
+                                            <small> {el}</small>
+                                        ))}
+                                    </div>
+                                    <button type={'submit'} onClick={() => { getUser() }}><img src={buttonCheck} alt="" /></button>
+                                </div>
+                            </div>
+                        ))
+
+                    }
+
+                </div>
+            </div>
+
+
+            <ToastContainer />
+
         </div>
     </div>
+    </div >
 
 }
 

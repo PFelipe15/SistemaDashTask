@@ -9,7 +9,7 @@
 
 .container-home {
   width: 100vw;
-  height: 100vh;
+ 
   background-color: var(--background);
   display: flex;
 
@@ -57,7 +57,7 @@ a {
   width: 100vw;
   background: #FBFAFF;
   border-radius: 32px 0px 0px 0px;
-  min-height: 100%;
+
 
 }
 
@@ -103,9 +103,10 @@ a {
   font-family: 'inter', sans-serif;
 }
 
-#buttonPen{
+#buttonPen {
   display: flex;
 }
+
 .toggleNameInput input:hover {
   border: 1px solid var(--purple);
 }
@@ -227,7 +228,7 @@ a {
 
 @media screen and (max-width: 950px) {
   .container-home {
-    height: auto !important;
+    height: 100%;
   }
 
   .container-card {

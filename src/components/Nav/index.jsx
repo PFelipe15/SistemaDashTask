@@ -17,22 +17,16 @@ function NavMenu() {
     const [signOut, loading, error] = useSignOut(auth);
     let navigate = useNavigate()
 
-    const [selectedImage, setSelectedImage] = useState(getAuth().currentUser.photoURL);
-
-
-
     const logout = async () => {
-        const success = await signOut();
-        if (success) {
-            toast.info("Deslogando...");
-            setTimeout(() => {
-
-                navigate('/')
-            }, 1000)
-        }
-
-
+        toast.info("Deslogando...");
+        setTimeout(async () => {
+            await signOut();
+            navigate('/')
+        }, 1000)
     }
+
+
+
 
 
 

@@ -28,9 +28,9 @@ function Register() {
 
         let register = await createUserWithEmailAndPassword(email, password)
         if (register) {
-
+            let auth = getAuth()
             toast.success("Usuario Criado!")
-            updateProfile(register.user, {
+            updateProfile(auth.currentUser, {
                 displayName: userName
             })
 
@@ -51,7 +51,7 @@ function Register() {
 
 
 
-toast.error(error.message)
+        toast.error(error.message)
 
 
 

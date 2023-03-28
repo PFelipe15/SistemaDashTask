@@ -28,7 +28,8 @@ function Login() {
         }
         let login = await signInWithEmailAndPassword(email, password)
         if (login) {
-            toast.success("Bem Vindo!");
+           
+            toast.success("Bem Vindo!" );
             setTimeout(() => {
 
                 navigate('/home')
@@ -65,7 +66,7 @@ function Login() {
 
 
             }
-             
+
         });
 
 

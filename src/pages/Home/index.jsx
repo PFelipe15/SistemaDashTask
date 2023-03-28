@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import NavMenu from '../../components/Nav';
 import Vector from '../../assets/Vector.svg'
 import buttonSeta from '../../assets/SetaRight.svg'
-import buttonLeft from '../../assets/buttonLeft.svg'
+import buttonLeft from '../../assets/buttonleft.svg'
 import buttonPen from '../../assets/Caneta.svg'
 import buttonCheck from '../../assets/check.svg'
 import max from '../../assets/max.svg'

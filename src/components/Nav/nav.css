@@ -43,7 +43,7 @@
 }
 
 .menu-nav ul li:hover {
-    border-right: 2px solid var(--text-primarycolor);
+    border-right: 2px solid #fff;
 }
 
 .menu-nav ul li button {

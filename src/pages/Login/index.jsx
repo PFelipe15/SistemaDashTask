@@ -10,7 +10,7 @@ import eyeOff2 from '../../assets/eye-off2.svg'
 import { useContext } from 'react';
 import { UserContext } from '../../context/userContext'
 function Login() {
- 
+
     const navigate = useNavigate()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -22,19 +22,18 @@ function Login() {
     ] = useSignInWithEmailAndPassword(auth);
 
     async function handleLogin() {
+        console.log(email, password)
         if (!email || !password) {
             return toast.warning("Dados não informados!");
         }
 
         let login = await signInWithEmailAndPassword(email, password)
         if (login) {
-          
-            navigate("/home")
+            console.log("Login success!");
+            navigate('/home')
         }
-
-
         else {
-            toast.error("Usuario não encontrado!");
+            console.log("Login error!" + login);
         }
     }
 

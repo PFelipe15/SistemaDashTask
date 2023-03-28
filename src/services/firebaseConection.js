@@ -3,12 +3,12 @@ import { initializeApp } from "firebase/app";
  
 import { getFirestore } from "firebase/firestore";
 const firebaseConfig = {
-  apiKey: "AIzaSyDSgLo30xFGcLj34bjCzpQuN90u98uFI0g",
-  authDomain: "react-auth-e344e.firebaseapp.com",
-  projectId: "react-auth-e344e",
-  storageBucket: "react-auth-e344e.appspot.com",
-  messagingSenderId: "423506005322",
-  appId: "1:423506005322:web:9d626e4c0f8308caa045b3"
+  apiKey: "AIzaSyCsQPutKM72e7IyjLe9BM7bW-N0oSAFxiA",
+  authDomain: "dashtasksteam.firebaseapp.com",
+  projectId: "dashtasksteam",
+  storageBucket: "dashtasksteam.appspot.com",
+  messagingSenderId: "353097192095",
+  appId: "1:353097192095:web:4ad51587567c13d1b588aa"
 };
 
 // Initialize Firebase

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import NavMenu from '../../components/Nav';
 import Vector from '../../assets/Vector.svg'
 import buttonSeta from '../../assets/SetaRight.svg'
-import buttonCheck from '../../assets/check.svg'
+import buttonLeft from '../../assets/buttonLeft.svg'
 import max from '../../assets/max.svg'
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, updateProfile } from "firebase/auth";
 import './home.css';
 import { ToastContainer, toast } from 'react-toastify'
 import { collection, doc, setDoc, getDoc, getDocs, updateDoc } from "firebase/firestore";
@@ -13,12 +13,27 @@ import { useContext } from 'react';
 import { UserContext } from '../../context/userContext'
 import { Tooltip } from 'react-tooltip'
 import Cards from '../../data/CardData'
+
 function Home() {
 
 
     const { isLogged, setIsLogged } = useContext(UserContext);
-    const [cards, setCards] = useState(Cards)
-    const [isLoading, setIsLoading] = useState(false);
+    const [cards, setCards] = useState([])
+    const [isLoading, setIsLoading] = useState(true);
+    const [userName, setUserName] = useState();
+   
+    async function getUser() {
+        let userName = prompt("Como quer ser chamado?")
+        const auth = getAuth();
+        updateProfile(auth.currentUser, {
+            displayName: userName, photoURL: "https://avatars.githubusercontent.com/u/82221329?v=4"
+        }).then(() => {
+            console.log("Sucess")
+        }).catch((error) => {
+            console.log("ERROR: " + error)
+        });
+    }
+
 
     async function goToFazendoTask(id) {
         const taskRef = doc(db, "tasks", id);
@@ -38,7 +53,6 @@ function Home() {
 
 
     }
-
     let handleLimit = () => {
         let p = document.querySelectorAll('.card p')
         const limit = 80
@@ -49,44 +63,29 @@ function Home() {
         }
     }
     useEffect(() => {
+
+
         async function getDocument() {
-            //     const lista = []
-            //     const querySnapshot = await getDocs(collection(db, "tasks"));
-            //     querySnapshot.forEach((doc) => {
-            //         const data = doc.data();
-            //         data.id = doc.id;
-            //         lista.push(data);
-            //         setCards(lista)
-            //         setIsLoading(false)
+            const lista = []
+            const querySnapshot = await getDocs(collection(db, "tasks"));
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                data.id = doc.id;
 
-            //     });
-
+                lista.push(data);
+                setCards(lista)
+                setIsLoading(false)
+            });
 
         }
-        setCards(Cards)
-
-        async function getUser() {
-            const auth = getAuth();
-            const user = auth.currentUser;
-
-            if (user !== null) {
-                user.providerData.forEach((profile) => {
-                    console.log("Sign-in provider: " + profile.providerId);
-                    console.log("  Provider-specific UID: " + profile.uid);
-                    console.log("  Name: " + profile.displayName);
-                    console.log("  Email: " + profile.email);
-                    console.log("  Photo URL: " + profile.photoURL);
-                });
-            }
-        }
-
 
 
         getDocument()
         handleLimit()
-        getUser()
+        setphotoUser(getAuth().currentUser.photoURL)
+        setUserName(getAuth().currentUser.displayName)
 
-    }, [cards])
+    }, [cards, userName])
 
     return <div className='container-home'>
         <NavMenu />
@@ -95,89 +94,100 @@ function Home() {
             <div className="main">
                 <div className="main-header">
                     <div className="title-kaban">
-                        <h1>Felipe</h1>
-                        
-                    
+                        <h1>{userName || 'Not Found'}</h1>
+
+
+                    </div>
+
                 </div>
+                <div className="main-kanbans">
+                    <div className='container-card'>
+                        <h1>A fazer {isLogged}</h1>
+                        {
+                            isLoading || cards.filter((el) => el.status === "A Fazer").length == 0 ? (<p>Não há Tarefas Aqui!</p>) : cards.filter((el) => el.status === "A Fazer").map((el) => (
+                                <div className="card">
+                                    <h3>{el.title}</h3>
+                                    <p>{el.description}</p>
+                                    <div className="footer-card">
+                                        <div className="tags">
+                                            {el.tags?.map((el) => (
+                                                <small> {el}</small>
+                                            ))}
+                                        </div>
+                                        <div className="buttons-card">
+
+                                            <button type={'submit'} onClick={() => { getUser() }}><img src={max} alt="" /></button>
+
+                                            <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}><img src={buttonSeta} alt="" /></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+
+                        }
+
+                    </div>
+                    <div className='container-card'>
+                        <h1>Fazendo</h1>
+                        {
+                            isLoading || cards.filter((el) => el.status === "Fazendo").length == 0 ? (<p>Não há Tarefas Aqui!</p>) : cards.filter((el) => el.status === "Fazendo").map((el) => (
+                                <div className="card">
+                                    <h3>{el.title}</h3>
+                                    <p>{el.description}</p>
+                                    <div className="footer-card">
+                                        <div className="tags">
+                                            {el.tags?.map((el) => (
+                                                <small> {el}</small>
+                                            ))}
+                                        </div>
+                                        <div className="buttons-card">
+
+                                            <button type={'submit'} onClick={() => { getUser() }}><img src={max} alt="" /></button>
+
+                                            <button type={'submit'} onClick={() => { goToFeitoTask(el.id) }}><img src={buttonSeta} alt="" /></button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            ))
+
+                        }
+
+                    </div>
+
+                    <div className='container-card'>
+                        <h1>Feito</h1>
+                        {
+                            isLoading ? (<p>Carregando</p>) : cards.filter((el) => el.status === "Feito").map((el) => (
+                                <div className="card">
+                                    <h3>{el.title}</h3>
+                                    <p>{el.description}</p>
+                                    <div className="footer-card">
+                                        <div className="tags">
+                                            {el.tags?.map((el) => (
+                                                <small> {el}</small>
+                                            ))}
+                                        </div>
+                                        <div className="buttons-card">
+
+                                            <button type={'submit'} onClick={() => { }}><img src={max} alt="" /></button>
+
+                                            <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}><img src={buttonLeft} alt="" /></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+
+                        }
+
+                    </div>
+                </div>
+
+
+                <ToastContainer />
 
             </div>
-            <div className="main-kanbans">
-                <div className='container-card'>
-                    <h1>A fazer {isLogged}</h1>
-                    {
-                        isLoading || cards.filter((el) => el.status === "A Fazer").length == 0 ? (<p>Não há Tarefas Aqui!</p>) : cards.filter((el) => el.status === "A Fazer").map((el) => (
-                            <div className="card">
-                                <h3>{el.title}</h3>
-                                <p>{el.description}</p>
-                                <div className="footer-card">
-                                    <div className="tags">
-                                        {el.tags?.map((el) => (
-                                            <small> {el}</small>
-                                        ))}
-                                    </div>
-                                    <div className="buttons-card">
-
-                                        <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}><img src={max} alt="" /></button>
-                                        
-                                        <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}><img src={buttonSeta} alt="" /></button>
-                                    </div>
-                                </div>
-                            </div>
-                        ))
-
-                    }
-
-                </div>
-                <div className='container-card'>
-                    <h1>Fazendo</h1>
-                    {
-                        isLoading || cards.filter((el) => el.status === "Fazendo").length == 0 ? (<p>Não há Tarefas Aqui!</p>) : cards.filter((el) => el.status === "Fazendo").map((el) => (
-                            <div className="card">
-                                <h3>{el.title}</h3>
-                                <p>{el.description}</p>
-                                <div className="footer-card">
-                                    <div className="tags">
-                                        {el.tags?.map((el) => (
-                                            <small> {el}</small>
-                                        ))}
-                                    </div>
-                                    <button type={'submit'} onClick={() => { goToFeitoTask(el.id) }}><img src={buttonSeta} alt="" /></button>
-                                </div>
-                            </div>
-                        ))
-
-                    }
-
-                </div>
-
-                <div className='container-card'>
-                    <h1>Feito</h1>
-                    {
-                        isLoading ? (<p>Carregando</p>) : cards.filter((el) => el.status === "Feito").map((el) => (
-                            <div className="card">
-                                <h3>{el.title}</h3>
-                                <p>{el.description}</p>
-                                <div className="footer-card">
-                                    <div className="tags">
-                                        {el.tags?.map((el) => (
-                                            <small> {el}</small>
-                                        ))}
-                                    </div>
-                                    <button type={'submit'} onClick={() => { getUser() }}><img src={buttonCheck} alt="" /></button>
-                                </div>
-                            </div>
-                        ))
-
-                    }
-
-                </div>
-            </div>
-
-
-            <ToastContainer />
-
         </div>
-    </div>
     </div >
 
 }

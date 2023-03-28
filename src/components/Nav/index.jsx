@@ -5,40 +5,50 @@ import tablet from '../../assets/Nav/tablet-portrait.svg'
 import people from '../../assets/Nav/people.svg'
 import cog from '../../assets/Nav/cog.svg'
 import perfil from '../../assets/perfil.png'
+import loggout from '../../assets/loggout.svg'
+import { ToastContainer, toast } from 'react-toastify';
 import Document from '../../assets/Nav/document-text.svg'
-import { getAuth, updateProfile } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
+import { useSignOut } from 'react-firebase-hooks/auth';
+import { useNavigate } from 'react-router-dom';
+import { auth } from '../../services/firebaseConection';
+
 function NavMenu() {
-    const [photoUser, setPhotoUser] = useState( );
-    function handlePhotoUser() {
-        alert("teste")
-        const auth = getAuth();
-        const profilephoto = prompt("Onde esta a foto")
-        updateProfile(auth.currentUser, {
-            photoURL: profilephoto
-        }).then(() => {
-            console.log("Sucess")
-            setPhotoUser(profilephoto)
-        }).catch((error) => {
-            console.log("ERROR: " + error)
-        });
+    const [signOut, loading, error] = useSignOut(auth);
+    let navigate = useNavigate()
+
+    const [selectedImage, setSelectedImage] = useState(getAuth().currentUser.photoURL);
+
+
+
+    const logout = async () => {
+        const success = await signOut();
+        if (success) {
+            toast.info("Deslogando...");
+            setTimeout(() => {
+
+                navigate('/')
+            }, 1000)
+        }
+
+
     }
 
-    useEffect(() => {
 
 
-        return () => {
-        }
-    }, [photoUser])
+
+
 
     return (
         <div className="menu">
 
-            <img id='perfilId' src={photoUser} alt="" />
-            <button onClick={() => {
-                handlePhotoUser()
-            }}>
-                <img src={cog} alt="" />
-            </button>
+            <img src={perfil} alt="teste" id="perfilId" />
+
+            <div className="loggout">
+
+                <button onClick={logout} > <img src={loggout} alt="" /> Sair </button>
+            </div>
+
             <div className="menu-nav">
                 <ul>
                     <li className='toggleDesktop' ><button><img src={tablet} alt="" />Boards</button>  </li>
@@ -47,9 +57,10 @@ function NavMenu() {
                     <li className='toggleMobile'><button><img src={tablet} alt="" /></button>  </li>
                     <li className='toggleMobile' ><button><img src={people} alt="" /></button></li>
                     <li className='toggleMobile'><button><img src={cog} alt="" /></button></li>
+
                 </ul>
             </div>
-
+            <ToastContainer />
         </div>);
 }
 

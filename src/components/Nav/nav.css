@@ -61,6 +61,24 @@
 
 }
 
+.menu .loggout {
+    display: flex;
+    justify-content: center;
+
+}
+
+.menu .loggout button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 16px;
+    color: var(--color-background);
+    font-weight: bold;
+}
+
 .menu-nav ul li button:hover {
     transform: scale(1.1);
 

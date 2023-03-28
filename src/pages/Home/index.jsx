@@ -3,6 +3,8 @@ import NavMenu from '../../components/Nav';
 import Vector from '../../assets/Vector.svg'
 import buttonSeta from '../../assets/SetaRight.svg'
 import buttonLeft from '../../assets/buttonLeft.svg'
+import buttonPen from '../../assets/Caneta.svg'
+import buttonCheck from '../../assets/check.svg'
 import max from '../../assets/max.svg'
 import { getAuth, updateProfile } from "firebase/auth";
 import './home.css';
@@ -20,21 +22,41 @@ function Home() {
     const { isLogged, setIsLogged } = useContext(UserContext);
     const [cards, setCards] = useState([])
     const [isLoading, setIsLoading] = useState(true);
-    const [userName, setUserName] = useState();
-   
+    const [userName, setUserName] = useState(getAuth().currentUser.displayName);
+    function habilityNameToggle() {
+        let eltoggle = document.querySelector('.toggleNameInput')
+        let elName = document.querySelector('#idName')
+        let buttonPen = document.querySelector('#idButtonPen')
+
+        if (eltoggle.style.display === 'flex') {
+            eltoggle.style.display = 'none'
+            elName.style.display = 'flex'
+            buttonPen.style.display = 'flex'
+           
+        } else {
+            eltoggle.style.display = 'flex'
+            elName.style.display = 'none '
+            buttonPen.style.display = 'none'
+        }
+
+    }
     async function getUser() {
-        let userName = prompt("Como quer ser chamado?")
         const auth = getAuth();
         updateProfile(auth.currentUser, {
-            displayName: userName, photoURL: "https://avatars.githubusercontent.com/u/82221329?v=4"
+            displayName: userName
         }).then(() => {
-            console.log("Sucess")
+            toast.success("Seu nome de Usuário foi atualizado!")
         }).catch((error) => {
-            console.log("ERROR: " + error)
+            toast.error("Erro ao atualizar Nome de usuário ")
         });
+
+        let eltoggle = document.querySelector('.toggleNameInput')
+        let elName = document.querySelector('#idName')
+        let buttonPen = document.querySelector('#idButtonPen')
+        eltoggle.style.display = 'none';
+        elName.style.display = 'flex';
+        buttonPen.style.display = 'flex'
     }
-
-
     async function goToFazendoTask(id) {
         const taskRef = doc(db, "tasks", id);
         await updateDoc(taskRef, {
@@ -64,7 +86,6 @@ function Home() {
     }
     useEffect(() => {
 
-
         async function getDocument() {
             const lista = []
             const querySnapshot = await getDocs(collection(db, "tasks"));
@@ -78,12 +99,10 @@ function Home() {
             });
 
         }
-
-
         getDocument()
         handleLimit()
-        setphotoUser(getAuth().currentUser.photoURL)
-        setUserName(getAuth().currentUser.displayName)
+
+
 
     }, [cards, userName])
 
@@ -94,10 +113,24 @@ function Home() {
             <div className="main">
                 <div className="main-header">
                     <div className="title-kaban">
-                        <h1>{userName || 'Not Found'}</h1>
+                        <h1 id='idName'>{userName}</h1>
+                        <div className="toggleNameInput">
+                            <input type="text" placeholder='Digite seu Nome!' value={userName} onChange={(e) => { setUserName(e.target.value) }} />
+                            <button onClick={() => { getUser() }}><img src={buttonCheck} alt="" /></button>
+                        </div>
+
+                        <button id='idButtonPen' onClick={() => {
+                            habilityNameToggle()
+                        }}>
+
+                            <img src={buttonPen} alt="" />
+                        </button>
 
 
                     </div>
+
+
+
 
                 </div>
                 <div className="main-kanbans">
@@ -142,7 +175,7 @@ function Home() {
                                         </div>
                                         <div className="buttons-card">
 
-                                            <button type={'submit'} onClick={() => { getUser() }}><img src={max} alt="" /></button>
+                                            <button type={'submit'} onClick={() => { }}><img src={max} alt="" /></button>
 
                                             <button type={'submit'} onClick={() => { goToFeitoTask(el.id) }}><img src={buttonSeta} alt="" /></button>
                                         </div>

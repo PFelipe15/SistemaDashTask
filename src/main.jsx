@@ -9,11 +9,18 @@ import "./index.css";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import { UserProvider } from "./context/userContext";
+import Register from "./pages/Register";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
     index: true
+  },
+
+  {
+    path: "/Register",
+    element: <Register />,
+   
   },
   {
     path: "/home",

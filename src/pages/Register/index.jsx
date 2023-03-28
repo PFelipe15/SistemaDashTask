@@ -1,43 +1,53 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useSignInWithEmailAndPassword, } from 'react-firebase-hooks/auth';
-import './login.css';
-import { auth } from '../../services/firebaseConection';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import './register.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import eyeOff from '../../assets/eye-off.svg'
 import eyeOff2 from '../../assets/eye-off2.svg'
 import { useContext } from 'react';
 import { UserContext } from '../../context/userContext'
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-function Login() {
+import { getAuth, updateProfile } from 'firebase/auth';
+import { auth } from '../../services/firebaseConection';
 
-    const navigate = useNavigate()
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+function Register() {
     const [
-        signInWithEmailAndPassword,
+        createUserWithEmailAndPassword,
         user,
         loading,
         error,
-    ] = useSignInWithEmailAndPassword(auth);
+    ] = useCreateUserWithEmailAndPassword(auth);
 
-    async function handleLogin() {
-        console.log(email, password)
+    const [userName, setUserName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate()
+    async function handleRegister() {
         if (!email || !password) {
             return toast.warning("Dados não informados!");
         }
-        let login = await signInWithEmailAndPassword(email, password)
-        if (login) {
-            toast.success("Logado com sucesso!");
+
+        let register = await createUserWithEmailAndPassword(email, password)
+        if (register) {
+
+            toast.success("Usuario Criado!")
+            updateProfile(register.user, {
+                displayName: userName
+            })
+
             setTimeout(() => {
 
                 navigate('/home')
             }, 1000)
 
+
+
         }
+
         else {
-            return toast.error("Usuario não encontrado!");
+            toast.error("Erro ao Criar Usuario!")
+
         }
     }
     function heandleEyeToClose() {
@@ -49,8 +59,6 @@ function Login() {
         document.querySelector('.passwordEye').type = "text"
     }
     function heandleEyeToOpen() {
-
-
         let eyeNone = document.querySelector('.eye-none')
         let eyeOpen = document.querySelector('.eye-open')
         eyeNone.style.visibility = 'visible'
@@ -58,29 +66,20 @@ function Login() {
         document.querySelector('.passwordEye').type = "password"
     }
 
-    useEffect(() => {
-        const auth = getAuth();
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                navigate('/home')
-
-
-            }
-        });
-
-
-    }, [ ])
-
     return <div>
         <div class="container">
             <div class="container-form-login">
                 <div class="form-login">
                     <div class="form">
                         <h1>Acesse a plataforma</h1>
-                        <p>Faça login ou registre-se para começar a construir seus projetos ainda hoje.</p>
+                        <p>Faça seu registro!</p>
 
                         <div class="form-input">
-
+                            <label class="label-input" for="">Seu Nome</label>
+                            <input type="nome" name="nome" id="idNome" class="input-text"
+                                placeholder="Digite seu nome..." value={userName}
+                                onChange={(e) => setUserName(e.target.value)} >
+                            </input>
                             <label class="label-input" for="">E-mail</label>
                             <input type="email" name="email" id="idEmail" class="input-text"
                                 placeholder="Digite seu e-mail" value={email}
@@ -101,13 +100,10 @@ function Login() {
 
                             </div>
                             <button class="btnEntrar" onClick={() => {
-                                handleLogin()
-                            }}>Entrar</button>
+                                handleRegister()
+                            }}>Registrar</button>
                             <ToastContainer />
-                            <div class="box-footer">
-                                <label for="">ainda não tem uma conta?</label><Link to={'/Register'} href="#">Inscreva-se</Link>
 
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -118,6 +114,6 @@ function Login() {
             </div>
         </div>
     </div>
-}
 
-export default Login;
+}
+export default Register;

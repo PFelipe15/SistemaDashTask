@@ -23,13 +23,12 @@ function Login() {
     ] = useSignInWithEmailAndPassword(auth);
 
     async function handleLogin() {
-        console.log(email, password)
         if (!email || !password) {
             return toast.warning("Dados não informados!");
         }
         let login = await signInWithEmailAndPassword(email, password)
         if (login) {
-            toast.success("Logado com sucesso!");
+            toast.success("Bem Vindo!");
             setTimeout(() => {
 
                 navigate('/home')
@@ -66,10 +65,11 @@ function Login() {
 
 
             }
+             
         });
 
 
-    }, [ ])
+    }, [])
 
     return <div>
         <div class="container">

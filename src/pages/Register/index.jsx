@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import './register.css';
@@ -6,9 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import eyeOff from '../../assets/eye-off.svg'
 import eyeOff2 from '../../assets/eye-off2.svg'
-import { useContext } from 'react';
-import { UserContext } from '../../context/userContext'
-import { getAuth, updateProfile } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, updateProfile } from 'firebase/auth';
 import { auth } from '../../services/firebaseConection';
 
 function Register() {
@@ -44,11 +42,19 @@ function Register() {
 
 
         }
+        if (error.code === 'auth/email-already-exists') {
 
-        else {
-            toast.error("Erro ao Criar Usuario!")
-
+            toast.error("Usuário já existe!")
         }
+
+
+
+
+
+toast.error(error.message)
+
+
+
     }
     function heandleEyeToClose() {
 
@@ -65,7 +71,18 @@ function Register() {
         eyeOpen.style.visibility = 'hidden'
         document.querySelector('.passwordEye').type = "password"
     }
+    useEffect(() => {
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                navigate('/home')
 
+
+            }
+        });
+
+
+    }, [])
     return <div>
         <div class="container">
             <div class="container-form-login">

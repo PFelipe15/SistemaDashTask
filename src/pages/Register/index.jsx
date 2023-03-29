@@ -17,7 +17,7 @@ function Register() {
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
 
-    const [userName, setUserName] = useState('');
+ 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate()
@@ -30,13 +30,14 @@ function Register() {
         if (register) {
             let auth = getAuth()
             toast.success("Usuario Criado!")
+
             updateProfile(auth.currentUser, {
                 displayName: userName
             })
-
+            console.log(auth.currentUser.displayName)
             setTimeout(() => {
 
-                navigate('/home')
+                navigate('/home', {})
             }, 1000)
 
 
@@ -92,11 +93,6 @@ function Register() {
                         <p>Faça seu registro!</p>
 
                         <div class="form-input">
-                            <label class="label-input" for="">Seu Nome</label>
-                            <input type="nome" name="nome" id="idNome" class="input-text"
-                                placeholder="Digite seu nome..." value={userName}
-                                onChange={(e) => setUserName(e.target.value)} >
-                            </input>
                             <label class="label-input" for="">E-mail</label>
                             <input type="email" name="email" id="idEmail" class="input-text"
                                 placeholder="Digite seu e-mail" value={email}
@@ -104,7 +100,7 @@ function Register() {
                             </input>
                             <label for="" class="show">Digite um e-mail válido</label>
                             <div class="password-input-top">
-                                <label for="" class="label-input">Senha</label> <a href="#">Esqueceu a senha?</a>
+                                <label for="" class="label-input">Senha</label>  
                             </div>
                             <div class="input-password">
                                 <input type="password" name="senha" id="idSenha " class="input-text passwordEye"

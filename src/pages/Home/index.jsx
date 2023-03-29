@@ -6,7 +6,7 @@ import buttonLeft from '../../assets/buttonleft.svg'
 import buttonPen from '../../assets/Caneta.svg'
 import buttonCheck from '../../assets/check.svg'
 import max from '../../assets/max.svg'
-import { getAuth, updateProfile } from "firebase/auth";
+import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
 import './home.css';
 import { ToastContainer, toast } from 'react-toastify'
 import { collection, doc, setDoc, getDoc, getDocs, updateDoc } from "firebase/firestore";
@@ -17,12 +17,10 @@ import { Tooltip } from 'react-tooltip'
 import Cards from '../../data/CardData'
 
 function Home() {
-
-
     const { isLogged, setIsLogged } = useContext(UserContext);
     const [cards, setCards] = useState([])
     const [isLoading, setIsLoading] = useState(true);
-    const [userName, setUserName] = useState(getAuth().currentUser.displayName);
+    const [userName, setUserName] = useState();
     function habilityNameToggle() {
         let eltoggle = document.querySelector('.toggleNameInput')
         let elName = document.querySelector('#idName')
@@ -32,7 +30,7 @@ function Home() {
             eltoggle.style.display = 'none'
             elName.style.display = 'flex'
             buttonPen.style.display = 'flex'
-           
+
         } else {
             eltoggle.style.display = 'flex'
             elName.style.display = 'none '
@@ -84,8 +82,7 @@ function Home() {
             ps.innerHTML = ps.innerHTML.substring(0, limit) + donstOrEmpty
         }
     }
-    useEffect(() => {
-
+    useEffect(() => { 
         async function getDocument() {
             const lista = []
             const querySnapshot = await getDocs(collection(db, "tasks"));
@@ -101,10 +98,21 @@ function Home() {
         }
         getDocument()
         handleLimit()
+        const auth = getAuth();
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUserName(user.displayName || 'Digite Seu Nome Aqui!');
+            } else {
+                setUserName('Não encontrado');
+            }
+        });
+
+       
+
+        return unsubscribe;
 
 
-
-    }, [cards, userName])
+    }, [cards])
 
     return <div className='container-home'>
         <NavMenu />
@@ -113,7 +121,7 @@ function Home() {
             <div className="main">
                 <div className="main-header">
                     <div className="title-kaban">
-                        <h1 id='idName'>{userName}</h1>
+                        <h1 id='idName'>{userName || 'not found'}</h1>
                         <div className="toggleNameInput">
                             <input type="text" placeholder='Digite seu Nome!' value={userName} onChange={(e) => { setUserName(e.target.value) }} />
                             <button onClick={() => { getUser() }}><img src={buttonCheck} alt="" /></button>

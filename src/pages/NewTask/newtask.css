@@ -1,0 +1,6 @@
+.container-newTask {
+    width: 100vw;
+    background-color: var(--background);
+    display: flex;
+
+}

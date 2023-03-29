@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import { UserProvider } from "./context/userContext";
 import Register from "./pages/Register";
+import NewTask from "./pages/NewTask";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -25,6 +26,11 @@ const router = createBrowserRouter([
   {
     path: "/home",
     element: <Home />,
+
+  },
+  {
+    path: "/NewTask",
+    element: <NewTask />,
 
   },
 

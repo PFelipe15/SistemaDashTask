@@ -1,0 +1,23 @@
+.toggleNameInput {
+    display: none;
+    gap: 20px;
+}
+
+.toggleNameInput input {
+    height: 4.3rem;
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid #E2E8F0;
+    padding-left: 12px;
+    font-size: 1.4rem;
+    font-weight: 400;
+    font-family: 'inter', sans-serif;
+}
+
+#buttonPen {
+    display: flex;
+}
+
+.toggleNameInput input:hover {
+    border: 1px solid var(--purple);
+}

@@ -15,6 +15,13 @@
 
 }
 
+.menu-header {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
 .menu #perfilId {
     margin-top: 32px;
     border-radius: 50%;
@@ -42,9 +49,6 @@
 
 }
 
-.menu-nav ul li:hover {
-    border-right: 2px solid #fff;
-}
 
 .menu-nav ul li button {
     background-color: transparent;
@@ -90,14 +94,23 @@
 }
 
 @media screen and (max-width: 768px) {
-    .menu {
-        height: auto !important;
-        width: auto !important;
-    }
-
     .menu #perfilId {
         display: none;
     }
+
+    .menu {
+        height: 100vi;
+        width: auto !important;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        flex-direction: column;
+        margin-right: 7px;
+        justify-content: center;
+
+    }
+
+
 
     .menu-nav ul .toggleDesktop {
         display: none;
@@ -105,6 +118,8 @@
 
     .menu-nav ul .toggleMobile {
         display: flex;
+        justify-content: center;
+
     }
 
 }

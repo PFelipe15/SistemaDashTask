@@ -11,16 +11,14 @@ import './home.css';
 import { ToastContainer, toast } from 'react-toastify'
 import { collection, doc, setDoc, getDoc, getDocs, updateDoc } from "firebase/firestore";
 import { app, db } from '../../services/firebaseConection';
-import { useContext } from 'react';
-import { UserContext } from '../../context/userContext'
 import { Tooltip } from 'react-tooltip'
 import Cards from '../../data/CardData'
+import NameToggle from '../../components/NameToggle';
 
 function Home() {
-    const { isLogged, setIsLogged } = useContext(UserContext);
+
     const [cards, setCards] = useState([])
     const [isLoading, setIsLoading] = useState(true);
-    const [userName, setUserName] = useState();
     function habilityNameToggle() {
         let eltoggle = document.querySelector('.toggleNameInput')
         let elName = document.querySelector('#idName')
@@ -82,7 +80,7 @@ function Home() {
             ps.innerHTML = ps.innerHTML.substring(0, limit) + donstOrEmpty
         }
     }
-    useEffect(() => { 
+    useEffect(() => {
         async function getDocument() {
             const lista = []
             const querySnapshot = await getDocs(collection(db, "tasks"));
@@ -98,138 +96,112 @@ function Home() {
         }
         getDocument()
         handleLimit()
-        const auth = getAuth();
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setUserName(user.displayName || 'Digite Seu Nome Aqui!');
-            } else {
-                setUserName('Não encontrado');
-            }
-        });
-
-       
-
-        return unsubscribe;
-
 
     }, [cards])
 
     return <div className='container-home'>
         <NavMenu />
-
         <div className="main-container">
             <div className="main">
                 <div className="main-header">
-                    <div className="title-kaban">
-                        <h1 id='idName'>{userName || 'not found'}</h1>
-                        <div className="toggleNameInput">
-                            <input type="text" placeholder='Digite seu Nome!' value={userName} onChange={(e) => { setUserName(e.target.value) }} />
-                            <button onClick={() => { getUser() }}><img src={buttonCheck} alt="" /></button>
-                        </div>
 
-                        <button id='idButtonPen' onClick={() => {
-                            habilityNameToggle()
-                        }}>
-
-                            <img src={buttonPen} alt="" />
-                        </button>
-
-
-                    </div>
-
-
-
+                    <NameToggle />
 
                 </div>
-                <div className="main-kanbans">
-                    <div className='container-card'>
-                        <h1>A fazer {isLogged}</h1>
-                        {
-                            isLoading || cards.filter((el) => el.status === "A Fazer").length == 0 ? (<p>Não há Tarefas Aqui!</p>) : cards.filter((el) => el.status === "A Fazer").map((el) => (
-                                <div className="card">
-                                    <h3>{el.title}</h3>
-                                    <p>{el.description}</p>
-                                    <div className="footer-card">
-                                        <div className="tags">
-                                            {el.tags?.map((el) => (
-                                                <small> {el}</small>
-                                            ))}
-                                        </div>
-                                        <div className="buttons-card">
-
-                                            <button type={'submit'} onClick={() => { getUser() }}><img src={max} alt="" /></button>
-
-                                            <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}><img src={buttonSeta} alt="" /></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
-
-                        }
-
-                    </div>
-                    <div className='container-card'>
-                        <h1>Fazendo</h1>
-                        {
-                            isLoading || cards.filter((el) => el.status === "Fazendo").length == 0 ? (<p>Não há Tarefas Aqui!</p>) : cards.filter((el) => el.status === "Fazendo").map((el) => (
-                                <div className="card">
-                                    <h3>{el.title}</h3>
-                                    <p>{el.description}</p>
-                                    <div className="footer-card">
-                                        <div className="tags">
-                                            {el.tags?.map((el) => (
-                                                <small> {el}</small>
-                                            ))}
-                                        </div>
-                                        <div className="buttons-card">
-
-                                            <button type={'submit'} onClick={() => { }}><img src={max} alt="" /></button>
-
-                                            <button type={'submit'} onClick={() => { goToFeitoTask(el.id) }}><img src={buttonSeta} alt="" /></button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            ))
-
-                        }
-
-                    </div>
-
-                    <div className='container-card'>
-                        <h1>Feito</h1>
-                        {
-                            isLoading ? (<p>Carregando</p>) : cards.filter((el) => el.status === "Feito").map((el) => (
-                                <div className="card">
-                                    <h3>{el.title}</h3>
-                                    <p>{el.description}</p>
-                                    <div className="footer-card">
-                                        <div className="tags">
-                                            {el.tags?.map((el) => (
-                                                <small> {el}</small>
-                                            ))}
-                                        </div>
-                                        <div className="buttons-card">
-
-                                            <button type={'submit'} onClick={() => { }}><img src={max} alt="" /></button>
-
-                                            <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}><img src={buttonLeft} alt="" /></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
-
-                        }
-
-                    </div>
-                </div>
 
 
-                <ToastContainer />
+
 
             </div>
+            <div className="main-kanbans">
+                <div className='container-card'>
+                    <h1>A fazer  </h1>
+                    {
+                        isLoading || cards.filter((el) => el.status === "A Fazer").length == 0 ? (<p>Não há Tarefas Aqui!</p>) : cards.filter((el) => el.status === "A Fazer").map((el) => (
+                            <div className="card">
+                                <h3>{el.title}</h3>
+                                <p>{el.description}</p>
+                                <div className="footer-card">
+                                    <div className="tags">
+                                        {el.tags?.map((el) => (
+                                            <small> {el}</small>
+                                        ))}
+                                    </div>
+                                    <div className="buttons-card">
+
+                                        <button type={'submit'} onClick={() => { getUser() }}><img src={max} alt="" /></button>
+
+                                        <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}><img src={buttonSeta} alt="" /></button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+
+                    }
+
+                </div>
+                <div className='container-card'>
+                    <h1>Fazendo</h1>
+                    {
+                        isLoading || cards.filter((el) => el.status === "Fazendo").length == 0 ? (<p>Não há Tarefas Aqui!</p>) : cards.filter((el) => el.status === "Fazendo").map((el) => (
+                            <div className="card">
+                                <h3>{el.title}</h3>
+                                <p>{el.description}</p>
+                                <div className="footer-card">
+                                    <div className="tags">
+                                        {el.tags?.map((el) => (
+                                            <small> {el}</small>
+                                        ))}
+                                    </div>
+                                    <div className="buttons-card">
+
+                                        <button type={'submit'} onClick={() => { }}><img src={max} alt="" /></button>
+
+                                        <button type={'submit'} onClick={() => { goToFeitoTask(el.id) }}><img src={buttonSeta} alt="" /></button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        ))
+
+                    }
+
+                </div>
+
+                <div className='container-card'>
+                    <h1>Feito</h1>
+                    {
+                        isLoading ? (<p>Carregando</p>) : cards.filter((el) => el.status === "Feito").map((el) => (
+                            <div className="card">
+                                <h3>{el.title}</h3>
+                                <p>{el.description}</p>
+                                <div className="footer-card">
+                                    <div className="tags">
+                                        {el.tags?.map((el) => (
+                                            <small> {el}</small>
+                                        ))}
+                                    </div>
+                                    <div className="buttons-card">
+
+                                        <button type={'submit'} onClick={() => { }}><img src={max} alt="" /></button>
+
+                                        <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}><img src={buttonLeft} alt="" /></button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+
+                    }
+
+                </div>
+            </div>
+
+
+            <ToastContainer />
+
         </div>
-    </div >
+    </div>
+    
 
 }
 

@@ -8,7 +8,7 @@ import NameToggle from '../../components/NameToggle';
 import { addDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from '../../services/firebaseConection';
 import { toast, ToastContainer } from 'react-toastify';
-import ModalAdmin from '../../components/ModalAdmin';
+
 import { Navigate, useNavigate } from 'react-router-dom';
 
 function NewTask() {
@@ -21,29 +21,26 @@ function NewTask() {
     const [userGet, setUserGet] = useState('not implemented')
     const [cards, setCards] = useState([])
     const [isLoading, setIsLoading] = useState(true);
-    const [showModdal, setShowModdal] = useState(true)
+    const [showModdal, setShowModdal] = useState('')
 
-    function isAdmin() {
-        const auth = getAuth();
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (!user || user.uid != 'NybZqbYBOUXE2NpiRDOdAlA03vJ2') {
-                setShowModdal(true)
 
-            }
-            else {
-                setShowModdal(false)
-            }
-        });
-    }
     function showModal() {
         let modalRef = document.querySelector('dialog')
-        if (showModal === false) {
-            return
-        }
-        else {
-            modalRef.removeAttribute('open')
-            modalRef.showModal()
-        }
+        modalRef.style.display = 'none'
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+            if (!user || user.uid !== 'NybZqbYBOUXE2NpiRDOdAlA03vJ2') {
+ 
+                let modalRef = document.querySelector('dialog')
+                modalRef.style.display = 'flex'
+                modalRef.showModal()
+              
+            }
+            
+
+
+        });
+
 
 
 
@@ -85,7 +82,7 @@ function NewTask() {
 
 
 
-        isAdmin()
+
         showModal()
         getDocument()
         handleLimit()
@@ -104,7 +101,7 @@ function NewTask() {
                     </div>
                     <div className="container-tasksMain">
 
-                        <dialog >
+                        <dialog>
                             <h1>Você não é um administrador!</h1>
                             <p>Somente administradores podem criar novas tarefas.</p>
                             <button onClick={() => {

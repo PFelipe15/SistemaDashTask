@@ -14,7 +14,7 @@ import { app, db } from '../../services/firebaseConection';
 import { Tooltip } from 'react-tooltip'
 import Cards from '../../data/CardData'
 import NameToggle from '../../components/NameToggle';
-import ModalAdmin from '../../components/ModalAdmin';
+ 
 
 function Home() {
 

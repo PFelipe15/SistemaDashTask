@@ -17,7 +17,7 @@ function Register() {
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
 
- 
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate()
@@ -29,12 +29,10 @@ function Register() {
         let register = await createUserWithEmailAndPassword(email, password)
         if (register) {
             let auth = getAuth()
-            toast.success("Usuario Criado!")
+            toast.success("Usuario Criado! Seja Bem Vindo!")
 
-            updateProfile(auth.currentUser, {
-                displayName: userName
-            })
-            console.log(auth.currentUser.displayName)
+
+
             setTimeout(() => {
 
                 navigate('/home', {})
@@ -52,7 +50,7 @@ function Register() {
 
 
 
-     
+
 
 
 
@@ -100,7 +98,7 @@ function Register() {
                             </input>
                             <label for="" class="show">Digite um e-mail válido</label>
                             <div class="password-input-top">
-                                <label for="" class="label-input">Senha</label>  
+                                <label for="" class="label-input">Senha</label>
                             </div>
                             <div class="input-password">
                                 <input type="password" name="senha" id="idSenha " class="input-text passwordEye"

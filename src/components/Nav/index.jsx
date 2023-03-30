@@ -60,6 +60,7 @@ function NavMenu() {
                     <li className='toggleMobile'><button><img src={cog} alt="" /></button></li>
 
                 </ul>
+                <span>Desenvolvido por Paulo Felipe</span>
             </div>
             <ToastContainer />
         </div>);

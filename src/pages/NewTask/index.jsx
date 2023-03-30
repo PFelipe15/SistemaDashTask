@@ -7,6 +7,7 @@ import { getAuth, updateProfile } from 'firebase/auth';
 import NameToggle from '../../components/NameToggle';
 import { addDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from '../../services/firebaseConection';
+import { toast, ToastContainer } from 'react-toastify';
 
 function NewTask() {
     const [title, setTitle] = useState('')
@@ -20,8 +21,13 @@ function NewTask() {
     const addTask = async () => {
         const tagsSplited = tags.split(' ')
         const taskCollectionRef = collection(db, 'tasks')
-        const user = await addDoc(taskCollectionRef, { title: title, description: description, repositorio: repo, tags: tagsSplited, status: status, userGetting: userGet })
-        console.log(user)
+        const createTask = await addDoc(taskCollectionRef, { title: title, description: description, repositorio: repo, tags: tagsSplited, status: status, userGetting: userGet })
+        if (createTask) {
+            toast.success("Tarefa Criada com Sucesso!")
+        }
+        else {
+            toast.warning("Erro ao Criar Tarefa")
+        }
     }
 
     let handleLimit = () => {
@@ -81,30 +87,31 @@ function NewTask() {
 
                         </div>
                         <div className="getLastTasks">
-                        <div className='container-card'>
-                    <h1>Ultimas Tarefas Adicionadas </h1>
-                    {
-                        isLoading || cards.filter((el) => el.status === "A Fazer").length == 0 ? (<p>Não há Tarefas Aqui!</p>) : cards.filter((el) => el.status === "A Fazer").map((el) => (
-                            <div className="card">
-                                <h3>{el.title}</h3>
-                                <p>{el.description}</p>
-                                <div className="footer-card">
-                                    <div className="tags">
-                                        {el.tags?.map((el) => (
-                                            <small> {el}</small>
-                                        ))}
-                                    </div>
-                                     
-                                </div>
+                            <div className='container-card'>
+                                <h1>Ultimas Tarefas Adicionadas </h1>
+                                {
+                                    isLoading || cards.filter((el) => el.status === "A Fazer").length == 0 ? (<p>Não há Tarefas Aqui!</p>) : cards.filter((el) => el.status === "A Fazer").map((el) => (
+                                        <div className="card">
+                                            <h3>{el.title}</h3>
+                                            <p>{el.description}</p>
+                                            <div className="footer-card">
+                                                <div className="tags">
+                                                    {el.tags?.map((el) => (
+                                                        <small> {el}</small>
+                                                    ))}
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    ))
+
+                                }
+
                             </div>
-                        ))
-
-                    }
-
-                </div>
                         </div>
                     </div>
                 </div>
+                <ToastContainer/>
             </div>
 
 

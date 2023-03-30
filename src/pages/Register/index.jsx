@@ -43,7 +43,7 @@ function Register() {
 
 
         }
-        if (error.code === 'auth/email-already-exists') {
+        if (error.code === 'auth/email-already-in-use') {
 
             toast.error("Usuário já existe!")
         }
@@ -52,7 +52,7 @@ function Register() {
 
 
 
-        toast.error(error.message)
+     
 
 
 

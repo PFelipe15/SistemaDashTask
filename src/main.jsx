@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,
-  redirect,
+
   RouterProvider,
+
 } from "react-router-dom";
 import "./index.css";
 import Home from "./pages/Home";
@@ -11,6 +12,12 @@ import Login from "./pages/Login";
 import { UserProvider } from "./context/userContext";
 import Register from "./pages/Register";
 import NewTask from "./pages/NewTask";
+
+import PrivateRouteAdmin from "./PrivateRoute";
+
+
+
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,7 +28,7 @@ const router = createBrowserRouter([
   {
     path: "/Register",
     element: <Register />,
-   
+
   },
   {
     path: "/home",
@@ -30,7 +37,15 @@ const router = createBrowserRouter([
   },
   {
     path: "/NewTask",
-    element: <NewTask />,
+
+    element:
+
+
+      <NewTask />
+
+
+
+
 
   },
 
@@ -39,9 +54,11 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+
     <UserProvider>
 
       <RouterProvider router={router} />
     </UserProvider>
+
   </React.StrictMode>
 );

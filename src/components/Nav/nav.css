@@ -16,6 +16,7 @@
 }
 
 .menu span {
+    font: bold 18px '';
     margin-top: 20px;
     display: flex;
     justify-content: center;
@@ -99,6 +100,8 @@
 .menu-nav ul .toggleMobile {
     display: none;
 }
+
+
 
 @media screen and (max-width: 768px) {
     .menu #perfilId {

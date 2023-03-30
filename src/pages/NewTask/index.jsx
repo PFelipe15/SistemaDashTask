@@ -3,13 +3,16 @@ import NavMenu from '../../components/Nav';
 import { useContext } from 'react';
 import { UserContext } from '../../context/userContext'
 import './newtask.css';
-import { getAuth, updateProfile } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, updateProfile } from 'firebase/auth';
 import NameToggle from '../../components/NameToggle';
 import { addDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from '../../services/firebaseConection';
 import { toast, ToastContainer } from 'react-toastify';
+import ModalAdmin from '../../components/ModalAdmin';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function NewTask() {
+    let navigate = useNavigate()
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [repo, setRepo] = useState('')
@@ -18,6 +21,23 @@ function NewTask() {
     const [userGet, setUserGet] = useState('not implemented')
     const [cards, setCards] = useState([])
     const [isLoading, setIsLoading] = useState(true);
+    const [modalOpen, setModalOpen] = useState(true);
+    function showModal() {
+
+        const auth = getAuth();
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (!user || user.uid !== 'NybZqbYBOUXE2NpiRDOdAlA03vJ2') {
+                let modalRef = document.querySelector('dialog')
+                modalRef.removeAttribute('open')
+                modalRef.showModal()
+                
+            }
+        });
+
+
+
+    }
+
     const addTask = async () => {
         const tagsSplited = tags.split(' ')
         const taskCollectionRef = collection(db, 'tasks')
@@ -29,7 +49,6 @@ function NewTask() {
             toast.warning("Erro ao Criar Tarefa")
         }
     }
-
     let handleLimit = () => {
         let p = document.querySelectorAll('.card p')
         const limit = 80
@@ -46,13 +65,17 @@ function NewTask() {
             querySnapshot.forEach((doc) => {
                 const data = doc.data();
                 data.id = doc.id;
-
                 lista.push(data);
                 setCards(lista)
                 setIsLoading(false)
             });
 
         }
+
+
+
+
+        showModal()
         getDocument()
         handleLimit()
 
@@ -62,7 +85,6 @@ function NewTask() {
     return (
         <div className='container-newTask'>
             <NavMenu />
-
             <div className="main-container">
                 <div className="main">
 
@@ -70,7 +92,15 @@ function NewTask() {
                         <NameToggle />
                     </div>
                     <div className="container-tasksMain">
-
+                        
+                            <dialog >
+                                <h1>Você não é um administrador!</h1>
+                                <p>Somente administradores podem criar novas tarefas.</p>
+                                <button onClick={() => {
+                                navigate('/home')
+                            }} >Retornar a Home</button>
+                            </dialog>
+ 
                         <div className="createtask-container">
                             <h1>Criar Tarefa</h1>
                             <div className="createtask-inputs">
@@ -111,7 +141,7 @@ function NewTask() {
                         </div>
                     </div>
                 </div>
-                <ToastContainer/>
+                <ToastContainer />
             </div>
 
 

@@ -14,6 +14,7 @@ import { app, db } from '../../services/firebaseConection';
 import { Tooltip } from 'react-tooltip'
 import Cards from '../../data/CardData'
 import NameToggle from '../../components/NameToggle';
+import ModalAdmin from '../../components/ModalAdmin';
 
 function Home() {
 
@@ -68,8 +69,6 @@ function Home() {
             status: 'Feito'
         });
         toast.success("Você Realizou a tarefa!")
-
-
     }
     let handleLimit = () => {
         let p = document.querySelectorAll('.card p')
@@ -111,7 +110,7 @@ function Home() {
 
 
 
-
+               
             </div>
             <div className="main-kanbans">
                 <div className='container-card'>
@@ -141,6 +140,7 @@ function Home() {
 
                 </div>
                 <div className='container-card'>
+
                     <h1>Fazendo</h1>
                     {
                         isLoading || cards.filter((el) => el.status === "Fazendo").length == 0 ? (<p>Não há Tarefas Aqui!</p>) : cards.filter((el) => el.status === "Fazendo").map((el) => (
@@ -201,7 +201,7 @@ function Home() {
 
         </div>
     </div>
-    
+
 
 }
 

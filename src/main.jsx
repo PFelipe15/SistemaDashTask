@@ -13,7 +13,7 @@ import { UserProvider } from "./context/userContext";
 import Register from "./pages/Register";
 import NewTask from "./pages/NewTask";
 
-import PrivateRouteAdmin from "./PrivateRoute";
+import PrivateRouteLoggin from "./PrivateRoute";
 
 
 
@@ -32,7 +32,9 @@ const router = createBrowserRouter([
   },
   {
     path: "/home",
-    element: <Home />,
+    element: <PrivateRouteLoggin>
+      <Home />,
+    </PrivateRouteLoggin>
 
   },
   {
@@ -40,8 +42,9 @@ const router = createBrowserRouter([
 
     element:
 
-
-      <NewTask />
+      <PrivateRouteLoggin>
+        <NewTask />
+      </PrivateRouteLoggin>
 
 
 

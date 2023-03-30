@@ -21,18 +21,29 @@ function NewTask() {
     const [userGet, setUserGet] = useState('not implemented')
     const [cards, setCards] = useState([])
     const [isLoading, setIsLoading] = useState(true);
-    const [modalOpen, setModalOpen] = useState(true);
-    function showModal() {
+    const [showModdal, setShowModdal] = useState(true)
 
+    function isAdmin() {
         const auth = getAuth();
         const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (!user || user.uid !== 'NybZqbYBOUXE2NpiRDOdAlA03vJ2') {
-                let modalRef = document.querySelector('dialog')
-                modalRef.removeAttribute('open')
-                modalRef.showModal()
-                
+            if (!user || user.uid != 'NybZqbYBOUXE2NpiRDOdAlA03vJ2') {
+                setShowModdal(true)
+
+            }
+            else {
+                setShowModdal(false)
             }
         });
+    }
+    function showModal() {
+        let modalRef = document.querySelector('dialog')
+        if (showModal === false) {
+            return
+        }
+        else {
+            modalRef.removeAttribute('open')
+            modalRef.showModal()
+        }
 
 
 
@@ -74,7 +85,7 @@ function NewTask() {
 
 
 
-
+        isAdmin()
         showModal()
         getDocument()
         handleLimit()
@@ -92,15 +103,15 @@ function NewTask() {
                         <NameToggle />
                     </div>
                     <div className="container-tasksMain">
-                        
-                            <dialog >
-                                <h1>Você não é um administrador!</h1>
-                                <p>Somente administradores podem criar novas tarefas.</p>
-                                <button onClick={() => {
+
+                        <dialog >
+                            <h1>Você não é um administrador!</h1>
+                            <p>Somente administradores podem criar novas tarefas.</p>
+                            <button onClick={() => {
                                 navigate('/home')
                             }} >Retornar a Home</button>
-                            </dialog>
- 
+                        </dialog>
+
                         <div className="createtask-container">
                             <h1>Criar Tarefa</h1>
                             <div className="createtask-inputs">

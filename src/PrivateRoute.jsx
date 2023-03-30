@@ -17,7 +17,7 @@ import NewTask from "./pages/NewTask";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
 
-const PrivateRouteAdmin = ({ children }) => {
+const PrivateRouteLoggin = ({ children }) => {
   const navigate = useNavigate();
   useEffect(() => {
    
@@ -26,4 +26,4 @@ const PrivateRouteAdmin = ({ children }) => {
   return  children
 }
 
-export default PrivateRouteAdmin
+export default PrivateRouteLoggin

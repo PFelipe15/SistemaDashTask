@@ -71,14 +71,22 @@
 
 }
 
+.container-tasksMain {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+
 @media screen and (max-width: 950px) {
-    .container-newTask{
-        height: 100vh;
+    .createtask-container {
+      
+        gap: 5px;
     }
 
-    .createtask-container {
-
-        gap: 5px;
+    .container-tasksMain {
+        flex-direction: column;
+        gap: 20px;
     }
 
     .createtask-inputs {
@@ -88,13 +96,15 @@
     .createtask-container h1 {
         font-size: 22px;
     }
-    .createtask-inputInline{
+
+    .createtask-inputInline {
         gap: 5px;
-        
+
     }
+
     .createtask-inputs label {
         font-size: 13px;
-    
+
 
     }
 

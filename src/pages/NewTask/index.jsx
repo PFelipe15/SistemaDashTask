@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavMenu from '../../components/Nav';
 import { useContext } from 'react';
 import { UserContext } from '../../context/userContext'
 import './newtask.css';
 import { getAuth, updateProfile } from 'firebase/auth';
 import NameToggle from '../../components/NameToggle';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from '../../services/firebaseConection';
 
 function NewTask() {
@@ -15,38 +15,94 @@ function NewTask() {
     const [tags, setTags] = useState(' ')
     const [status, setStatus] = useState('A Fazer')
     const [userGet, setUserGet] = useState('not implemented')
-
+    const [cards, setCards] = useState([])
+    const [isLoading, setIsLoading] = useState(true);
     const addTask = async () => {
         const tagsSplited = tags.split(' ')
         const taskCollectionRef = collection(db, 'tasks')
         const user = await addDoc(taskCollectionRef, { title: title, description: description, repositorio: repo, tags: tagsSplited, status: status, userGetting: userGet })
         console.log(user)
     }
+
+    let handleLimit = () => {
+        let p = document.querySelectorAll('.card p')
+        const limit = 80
+        for (let ps of p) {
+            const aboveLimit = ps.innerHTML.length > limit
+            const donstOrEmpty = aboveLimit ? '...' : ''
+            ps.innerHTML = ps.innerHTML.substring(0, limit) + donstOrEmpty
+        }
+    }
+    useEffect(() => {
+        async function getDocument() {
+            const lista = []
+            const querySnapshot = await getDocs(collection(db, "tasks"));
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                data.id = doc.id;
+
+                lista.push(data);
+                setCards(lista)
+                setIsLoading(false)
+            });
+
+        }
+        getDocument()
+        handleLimit()
+
+    }, [cards])
+
+
     return (
         <div className='container-newTask'>
             <NavMenu />
 
             <div className="main-container">
                 <div className="main">
+
                     <div className="main-header">
                         <NameToggle />
-
                     </div>
+                    <div className="container-tasksMain">
 
-                    <div className="createtask-container">
-                        <h1>Criar Tarefa</h1>
-                        <div className="createtask-inputs">
-                            <label htmlFor="">*TITULO</label><input value={title} onChange={(e) => { setTitle(e.target.value) }} type="text" placeholder='   Ex: Mudança de layout grid para Flex' />
+                        <div className="createtask-container">
+                            <h1>Criar Tarefa</h1>
+                            <div className="createtask-inputs">
+                                <label htmlFor="">*TITULO</label><input value={title} onChange={(e) => { setTitle(e.target.value) }} type="text" placeholder='   Ex: Mudança de layout grid para Flex' />
 
-                            <label htmlFor="">DESCRIÇÃO</label><input value={description} onChange={(e) => { setDescription(e.target.value) }} type="text" />
-                            <div className="createtask-inputInline">
-                                <label htmlFor="">*REPOSITÓRIO</label> <input value={repo} onChange={(e) => { setRepo(e.target.value) }} className='repo-style' type="text" placeholder='  Ex: https://github.com/PFelipe15/meuportifolio' />
-                                <label htmlFor="">TAGS</label> <input value={tags} onChange={(e) => { setTags(e.target.value) }} type="text" placeholder='Ex: #HTML' />
+                                <label htmlFor="">DESCRIÇÃO</label><input value={description} onChange={(e) => { setDescription(e.target.value) }} type="text" />
+                                <div className="createtask-inputInline">
+                                    <label htmlFor="">*REPOSITÓRIO</label> <input value={repo} onChange={(e) => { setRepo(e.target.value) }} className='repo-style' type="text" placeholder='  Ex: https://github.com/PFelipe15/meuportifolio' />
+                                    <label htmlFor="">TAGS</label> <input value={tags} onChange={(e) => { setTags(e.target.value) }} type="text" placeholder='Ex: #HTML' />
+                                </div>
+
+                                <button onClick={addTask}>CRIAR TAREFA</button>
                             </div>
 
-                            <button onClick={addTask}>CRIAR TAREFA</button>
                         </div>
+                        <div className="getLastTasks">
+                        <div className='container-card'>
+                    <h1>Ultimas Tarefas Adicionadas </h1>
+                    {
+                        isLoading || cards.filter((el) => el.status === "A Fazer").length == 0 ? (<p>Não há Tarefas Aqui!</p>) : cards.filter((el) => el.status === "A Fazer").map((el) => (
+                            <div className="card">
+                                <h3>{el.title}</h3>
+                                <p>{el.description}</p>
+                                <div className="footer-card">
+                                    <div className="tags">
+                                        {el.tags?.map((el) => (
+                                            <small> {el}</small>
+                                        ))}
+                                    </div>
+                                     
+                                </div>
+                            </div>
+                        ))
 
+                    }
+
+                </div>
+                        </div>
                     </div>
                 </div>
             </div>

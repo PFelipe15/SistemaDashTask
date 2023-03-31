@@ -1,135 +1,191 @@
 :root {
-    --background: #426247;
-    --text-primarycolor: #403937;
-    --color-background: #F8FAFC;
-    --text-color-primary: #403937;
-    --text-color-ligth: #475569;
+    --background: #1048c2;
+    --text-primarycolor: #1048c2;
+    --text-secondarycolor: #fafafa;
+  }
+ .menu {
+     width: 100px;
+     height: 100vi;
+     margin-right: 27px;
+     margin-left: 35px;
 
-}
+ }
 
-.menu {
-    width: 100px;
-    height: 100vi;
-    margin-right: 27px;
-    margin-left: 35px;
+ .menu span {
+     font: bold 18px '';
+     margin-top: 20px;
+     display: flex;
+     justify-content: center;
+     text-align: center;
+ }
 
-}
-
-.menu span {
-    font: bold 18px '';
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    text-align: center;
-}
-
-.menu-header {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
-}
-
-.menu #perfilId {
-    margin-top: 32px;
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-}
+ .menu-header {
+     display: flex;
+     flex-direction: column;
+     gap: 10px;
+     align-items: center;
 
 
+ }
 
-.menu .menu-nav {
-    margin-top: 60px;
+ .menu-perfil {
+     display: flex;
+     position: relative;
+     justify-content: center;
+     flex-direction: column;
+     align-items: center;
+     gap: 5px;
 
-}
+ }
 
-.menu-nav ul {
-    display: flex;
-    flex-direction: column;
-    gap: 36px;
-
-}
-
-.menu-nav ul li {
-    display: flex;
-    list-style: none;
-
-}
-
-
-.menu-nav ul li button {
-    background-color: transparent;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 16px;
-    color: #fff;
-    font-family: 'Inter', sans-serif;
-    gap: 16px;
-    transition: all 1.3s;
-
-}
-
-.menu .loggout {
-    display: flex;
-    justify-content: center;
-
-}
-
-.menu .loggout button {
-    background-color: transparent;
-    border: none;
-    outline: none;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 16px;
-    color: var(--color-background);
-    font-weight: bold;
-}
-
-.menu-nav ul li button:hover {
-    transform: scale(1.1);
-
-}
-
-.menu-nav ul .toggleMobile {
-    display: none;
-}
+ .menu-perfil #btnModdal {
+     position: absolute;
+     background-color: transparent;
+     border: none;
+     outline: none;
+     right: -10px;
+     top: 20px;
+ }
 
 
 
-@media screen and (max-width: 768px) {
-    .menu #perfilId {
-        display: none;
-    }
+ .menu #perfilId {
+     margin-top: 32px;
+     border-radius: 50%;
+     width: 120px;
+     height: 120px;
+     border: 3px solid #fff;
+ }
 
-    .menu {
-        height: 100vi;
-        width: auto !important;
-        margin-left: auto;
-        margin-right: auto;
-        display: flex;
-        flex-direction: column;
-        margin-right: 7px;
-        justify-content: center;
+ .moddalPefilLink {
 
-    }
+     display: none;
+     margin-top: 20px;
+     flex-direction: column;
+     gap: 5px;
+     align-items: center;
+
+ }
+
+ .moddalPefilLink span {
+     color: var( --text-secondarycolor);
+     font-weight: 300;
+ }
+
+ .moddalPefilLink input {
+     width: 150px;
+     border-radius: 5px;
+     border: none;
+     height: 2.6rem;
+     display: flex;
+     padding-left: 5px;
+ }
+
+ .moddalPefilLink button {
+     height: auto;
+     width: 60%;
+     color: var(--text-primarycolor);
+     background-color: #ffffff;
+     outline: none;
+     border: none;
+     border-radius: 4px;
+     font-family: 'inter', sans-serif;
+     font-weight: bold;
+     font-size: 1.6rem;
+     cursor: pointer;
+     transition: all 0.4s;
+ }
+
+ .menu .menu-nav {
+     margin-top: 60px;
+
+ }
+
+ .menu-nav ul {
+     display: flex;
+     flex-direction: column;
+     gap: 36px;
+
+ }
+
+ .menu-nav ul li {
+     display: flex;
+     list-style: none;
+
+ }
+
+
+ .menu-nav ul li button {
+     background-color: transparent;
+     border: none;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     font-style: normal;
+     font-weight: 700;
+     font-size: 16px;
+     color: #fff;
+     font-family: 'Inter', sans-serif;
+     gap: 16px;
+     transition: all 1.3s;
+
+ }
+
+ .loggout {
+     display: flex;
+     justify-content: center;
+
+ }
+
+ .loggout button {
+     background-color: transparent;
+     border: none;
+     outline: none;
+     display: flex;
+     align-items: center;
+     font-size: 16px;
+     color: var(--text-secondarycolor);
+     font-weight: bold;
+ }
+
+ .menu-nav ul li button:hover {
+     transform: scale(1.1);
+
+ }
+
+ .menu-nav ul .toggleMobile {
+     display: none;
+ }
 
 
 
-    .menu-nav ul .toggleDesktop {
-        display: none;
-    }
+ @media screen and (max-width: 768px) {
+     .menu #perfilId {
+         display: none;
+     }
 
-    .menu-nav ul .toggleMobile {
-        display: flex;
-        justify-content: center;
+     .menu {
+         height: 100vi;
+         width: auto !important;
+         margin-left: auto;
+         margin-right: auto;
+         display: flex;
+         flex-direction: column;
+         margin-right: 7px;
+         justify-content: center;
 
-    }
+     }
 
-}
+
+
+     .menu-nav ul .toggleDesktop {
+         display: none;
+     }
+
+     .menu-nav ul .toggleMobile {
+         display: flex;
+         justify-content: center;
+
+     }
+
+ }

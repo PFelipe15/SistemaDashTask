@@ -1,11 +1,4 @@
-:root {
-  --background: #426247;
-  --text-primarycolor: #403937;
-  --color-background: #F8FAFC;
-  --text-color-primary: #403937;
-  --text-color-ligth: #475569;
-
-}
+ 
 
 .container-home {
   width: 100vw;
@@ -16,8 +9,9 @@
 }
 
 :root {
-  --background: #426247;
-  --text-primarycolor: #403937;
+  --background: #1048c2;
+  --text-primarycolor: #1048c2;
+  --text-secondarycolor: #fafafa;
 }
 
 * {
@@ -37,7 +31,7 @@ a {
 .main-container {
   display: flex;
   width: 100vw;
-  background: #FBFAFF;
+  background: #ffffff;
   border-radius: 32px 0px 0px 0px;
   flex-direction: column;
 
@@ -129,7 +123,7 @@ a {
 
 .card:hover {
   transform: scale(1.1);
-  border: 2px solid rgba(174, 18, 226, 0.1);
+  border: 2px solid rgba(18, 53, 226, 0.1);
 }
 
 .card h3 {

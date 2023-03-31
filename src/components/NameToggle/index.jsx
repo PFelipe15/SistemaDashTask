@@ -5,8 +5,9 @@ import './nametoggle.css';
 import { useContext } from 'react';
 import { UserContext } from '../../context/userContext';
 import { getAuth, onAuthStateChanged, updateProfile } from 'firebase/auth';
-import { toast,ToastContainer } from 'react-toastify';
- 
+import { toast, ToastContainer } from 'react-toastify';
+import { FaCheckCircle } from 'react-icons/fa'
+import { BsFillPencilFill } from 'react-icons/bs'
 function NameToggle() {
     const { userName, setUserName } = useContext(UserContext)
     function habilityNameToggle() {
@@ -26,7 +27,6 @@ function NameToggle() {
         }
 
     }
-
     async function getUser() {
         const auth = getAuth();
         updateProfile(auth.currentUser, {
@@ -44,7 +44,6 @@ function NameToggle() {
         elName.style.display = 'flex';
         buttonPen.style.display = 'flex'
     }
-
 
 
     useEffect(() => {
@@ -71,17 +70,17 @@ function NameToggle() {
             <h1 id='idName'>{userName || 'not found'}</h1>
             <div className="toggleNameInput">
                 <input type="text" placeholder='Digite seu Nome!' value={userName} onChange={(e) => { setUserName(e.target.value) }} />
-                <button onClick={() => { getUser() }}><img src={buttonCheck} alt="" /></button>
+                <button onClick={() => { getUser() }}> <FaCheckCircle size={30} color="var(--text-primarycolor)" /> </button>  
             </div>
 
             <button id='idButtonPen' onClick={() => {
                 habilityNameToggle()
             }}>
 
-                <img src={buttonPen} alt="" />
+<BsFillPencilFill size={30} color="var(--text-primarycolor)" />
             </button>
 
-<ToastContainer/>
+            <ToastContainer />
         </div>
     )
 }

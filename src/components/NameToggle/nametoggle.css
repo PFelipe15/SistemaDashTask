@@ -19,5 +19,5 @@
 }
 
 .toggleNameInput input:hover {
-    border: 1px solid var(--purple);
+    border: 1px solid var(--text-primarycolor);
 }

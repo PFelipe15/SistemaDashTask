@@ -17,7 +17,6 @@ import NameToggle from '../../components/NameToggle';
  
 
 function Home() {
-
     const [cards, setCards] = useState([])
     const [isLoading, setIsLoading] = useState(true);
     function habilityNameToggle() {
@@ -103,14 +102,9 @@ function Home() {
         <div className="main-container">
             <div className="main">
                 <div className="main-header">
-
                     <NameToggle />
-
                 </div>
 
-
-
-               
             </div>
             <div className="main-kanbans">
                 <div className='container-card'>

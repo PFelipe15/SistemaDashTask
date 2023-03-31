@@ -30,15 +30,10 @@ function NewTask() {
         const auth = getAuth();
         onAuthStateChanged(auth, (user) => {
             if (!user || user.uid !== 'NybZqbYBOUXE2NpiRDOdAlA03vJ2') {
- 
                 let modalRef = document.querySelector('dialog')
                 modalRef.style.display = 'flex'
                 modalRef.showModal()
-              
             }
-            
-
-
         });
 
 
@@ -101,7 +96,7 @@ function NewTask() {
                     </div>
                     <div className="container-tasksMain">
 
-                        <dialog>
+                        <dialog id='dialogAdmin'>
                             <h1>Você não é um administrador!</h1>
                             <p>Somente administradores podem criar novas tarefas.</p>
                             <button onClick={() => {

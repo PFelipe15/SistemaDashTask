@@ -10,7 +10,7 @@
      display: flex;
      flex-direction: column;
      align-items: center;
- 
+
  }
 
  .createtask-container h1 {
@@ -57,7 +57,7 @@
  .createtask-inputs button {
      height: 56px;
      width: auto;
-     color: var(--text-secondarycolor);
+     color: #ffffff;
      background-color: var(--background);
      outline: none;
      border: none;
@@ -100,11 +100,11 @@
      border: 2px solid var(--text-primarycolor);
  }
 
- #dialogAdmin button {
+ #dialogAdmin #btntoHome {
 
      width: 230px;
      height: 56px;
-     color: var(--text-secondarycolorn);
+     color: var(--text-secondarycolor);
      background-color: var(--text-primarycolor);
      outline: none;
      border: none;

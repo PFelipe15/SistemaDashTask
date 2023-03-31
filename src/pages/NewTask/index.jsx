@@ -99,7 +99,7 @@ function NewTask() {
                         <dialog id='dialogAdmin'>
                             <h1>Você não é um administrador!</h1>
                             <p>Somente administradores podem criar novas tarefas.</p>
-                            <button onClick={() => {
+                            <button id='btntoHome' onClick={() => {
                                 navigate('/home')
                             }} >Retornar a Home</button>
                         </dialog>

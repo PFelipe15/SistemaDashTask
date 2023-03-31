@@ -1,24 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import NavMenu from '../../components/Nav';
-import Vector from '../../assets/Vector.svg'
-import buttonSeta from '../../assets/SetaRight.svg'
-import buttonLeft from '../../assets/buttonleft.svg'
-import buttonPen from '../../assets/Caneta.svg'
-import buttonCheck from '../../assets/check.svg'
-import max from '../../assets/max.svg'
+
+import { FaArrowCircleRight, FaArrowCircleLeft } from 'react-icons/fa'
+import { FiMaximize2 } from 'react-icons/fi'
+
 import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
 import './home.css';
 import { ToastContainer, toast } from 'react-toastify'
 import { collection, doc, setDoc, getDoc, getDocs, updateDoc } from "firebase/firestore";
 import { app, db } from '../../services/firebaseConection';
-import { Tooltip } from 'react-tooltip'
+
 import Cards from '../../data/CardData'
 import NameToggle from '../../components/NameToggle';
- 
+
 
 function Home() {
     const [cards, setCards] = useState([])
     const [isLoading, setIsLoading] = useState(true);
+   
     function habilityNameToggle() {
         let eltoggle = document.querySelector('.toggleNameInput')
         let elName = document.querySelector('#idName')
@@ -36,6 +35,8 @@ function Home() {
         }
 
     }
+
+  
     async function getUser() {
         const auth = getAuth();
         updateProfile(auth.currentUser, {
@@ -122,9 +123,9 @@ function Home() {
                                     </div>
                                     <div className="buttons-card">
 
-                                        <button type={'submit'} onClick={() => { getUser() }}><img src={max} alt="" /></button>
+                                        <button type={'submit'} onClick={() => { getUser() }}><FiMaximize2 color='var(--text-primarycolor)' size={'30px'} /></button>
 
-                                        <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}><img src={buttonSeta} alt="" /></button>
+                                        <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}><FaArrowCircleRight color='var(--text-primarycolor)' size={'30px'} /> </button>
                                     </div>
                                 </div>
                             </div>
@@ -149,9 +150,10 @@ function Home() {
                                     </div>
                                     <div className="buttons-card">
 
-                                        <button type={'submit'} onClick={() => { }}><img src={max} alt="" /></button>
+                                        <button type={'submit'} onClick={() => { }}><FiMaximize2 color='var(--text-primarycolor)' size={'30px'} /></button>
 
-                                        <button type={'submit'} onClick={() => { goToFeitoTask(el.id) }}><img src={buttonSeta} alt="" /></button>
+                                        <button type={'submit'} onClick={() => { goToFeitoTask(el.id) }}>
+                                            <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}> <FaArrowCircleRight color='var(--text-primarycolor)' size={'30px'} /></button></button>
                                     </div>
 
                                 </div>
@@ -177,9 +179,9 @@ function Home() {
                                     </div>
                                     <div className="buttons-card">
 
-                                        <button type={'submit'} onClick={() => { }}><img src={max} alt="" /></button>
+                                        <button type={'submit'} onClick={() => { }}><FiMaximize2 color='var(--text-primarycolor)' size={'30px'} /></button>
 
-                                        <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}><img src={buttonLeft} alt="" /></button>
+                                        <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}> <FaArrowCircleLeft color='var(--text-primarycolor)' size={'30px'} /></button>
                                     </div>
                                 </div>
                             </div>

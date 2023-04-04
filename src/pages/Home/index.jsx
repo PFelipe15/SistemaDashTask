@@ -96,7 +96,7 @@ function Home() {
         getDocument()
         handleLimit()
 
-    }, [cards])
+    }, [ ])
 
     return <div className='container-home'>
         <NavMenu />

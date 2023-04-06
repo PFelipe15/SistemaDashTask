@@ -23,7 +23,7 @@ function Register() {
     const [passwordConfirmed, setPasswordConfirmed] = useState('');
     const navigate = useNavigate()
     async function handleRegister() {
-        if (!email || !password) {
+        if (!email || !password || !passwordConfirmed) {
             return toast.warning("Dados não informados!");
         }
 
@@ -32,18 +32,18 @@ function Register() {
         }
 
         let register = await createUserWithEmailAndPassword(email, password)
-        if (error.code === 'auth/email-already-in-use') {
-           return toast.error("Usuário já existe!")
-        }
+        
         if (register) {
             toast.success("Usuario Criado! Seja Bem Vindo!")
             setTimeout(() => {
-                navigate('/home', {})
+           return     navigate('/home', {})
             }, 1000)
 
         }
-
-
+         
+        if (error.code === 'auth/email-already-in-use') {
+             return toast.error("Usuário já existe!")
+         }
 
     }
     function heandleEyeToClose() {

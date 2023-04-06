@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useSignInWithEmailAndPassword, } from 'react-firebase-hooks/auth';
 import './login.css';
@@ -8,9 +8,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import eyeOff from '../../assets/eye-off.svg'
 import eyeOff2 from '../../assets/eye-off2.svg'
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { UserContext } from '../../context/userContext';
 function Login() {
-
     const navigate = useNavigate()
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [
@@ -24,19 +25,21 @@ function Login() {
         if (!email || !password) {
             return toast.warning("Dados não informados!");
         }
-        let login = await signInWithEmailAndPassword(email, password)
-        if (login) {
-
+        signInWithEmailAndPassword(email, password).then((user) => {
+            
             toast.success("Bem Vindo!");
             setTimeout(() => {
 
                 navigate('/home')
             }, 1000)
+        }).catch(() => { return toast.error("Usuario não encontrado!") })
 
-        }
-        else {
-            return toast.error("Usuario não encontrado!");
-        }
+
+
+
+
+
+
     }
     function heandleEyeToClose() {
 
@@ -76,7 +79,7 @@ function Login() {
                 <div class="form-login">
                     <div class="form">
                         <h1>Acesse a plataforma</h1>
-                        <p>Faça login ou registre-se para começar a construir seus projetos ainda hoje.</p>
+                        <p>Faça login ou registre-se para começar a resolver e organizar suas tarefas!</p>
 
                         <div class="form-input">
 

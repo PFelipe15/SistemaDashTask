@@ -9,7 +9,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { FaCheckCircle } from 'react-icons/fa'
 import { BsFillPencilFill } from 'react-icons/bs'
 function NameToggle() {
-    const { userName, setUserName } = useContext(UserContext)
+    const { userName, setUserName, userId, setUserId} = useContext(UserContext)
     function habilityNameToggle() {
         let eltoggle = document.querySelector('.toggleNameInput')
         let elName = document.querySelector('#idName')
@@ -51,6 +51,7 @@ function NameToggle() {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setUserName(user.displayName || 'Digite Seu Nome Aqui!');
+                setUserId(user.uid)
             } else {
                 setUserName('Não encontrado');
             }

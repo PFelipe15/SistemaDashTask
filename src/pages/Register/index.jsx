@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import './register.css';
 import { ToastContainer, toast } from 'react-toastify';
@@ -20,37 +20,28 @@ function Register() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [passwordConfirmed, setPasswordConfirmed] = useState('');
     const navigate = useNavigate()
     async function handleRegister() {
         if (!email || !password) {
             return toast.warning("Dados não informados!");
         }
 
+        else if (password != passwordConfirmed) {
+            return toast.warning("Senhas não conferem!");
+        }
+
         let register = await createUserWithEmailAndPassword(email, password)
+        if (error.code === 'auth/email-already-in-use') {
+           return toast.error("Usuário já existe!")
+        }
         if (register) {
-            let auth = getAuth()
             toast.success("Usuario Criado! Seja Bem Vindo!")
-
-
-
             setTimeout(() => {
-
                 navigate('/home', {})
             }, 1000)
 
-
-
         }
-        if (error.code === 'auth/email-already-in-use') {
-
-            toast.error("Usuário já existe!")
-        }
-
-
-
-
-
-
 
 
 
@@ -75,8 +66,6 @@ function Register() {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 navigate('/home')
-
-
             }
         });
 
@@ -103,16 +92,34 @@ function Register() {
                             <div class="input-password">
                                 <input type="password" name="senha" id="idSenha " class="input-text passwordEye"
                                     placeholder="Digite sua senha" value={password}
-                                    onChange={(e) => setPassword(e.target.value)}></input>
+                                    onChange={(e) => setPassword(e.target.value)}>
+
+                                </input>
 
 
                                 <img src={eyeOff} class="fa-solid fa-eye-slash eye-none" onClick={() => { heandleEyeToClose() }} />
                                 <img src={eyeOff2} class="fa-solid fa-eye eye-open" onClick={() => { heandleEyeToOpen() }} />
 
                             </div>
+
+                            <div class="password-input-top">
+                                <label for="" class="label-input">Confirmar Senha*</label>
+                            </div>
+                            <div class="input-password">
+                                <input type="password" name="senha" id="idSenha " class="input-text passwordEye"
+                                    placeholder="Digite sua senha" value={passwordConfirmed}
+                                    onChange={(e) => setPasswordConfirmed(e.target.value)}>
+
+                                </input>
+
+
+
+                            </div>
+
                             <button class="btnEntrar" onClick={() => {
                                 handleRegister()
                             }}>Registrar</button>
+                            <Link to={'/'}>Voltar para o Login </Link>
                             <ToastContainer />
 
                         </div>

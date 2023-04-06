@@ -18,7 +18,7 @@ function NewTask() {
     const [repo, setRepo] = useState('')
     const [tags, setTags] = useState(' ')
     const [status, setStatus] = useState('A Fazer')
-    const [userGet, setUserGet] = useState('not implemented')
+    const [userGet, setUserGet] = useState(null)
     const [cards, setCards] = useState([])
     const [isLoading, setIsLoading] = useState(true);
     const [showModdal, setShowModdal] = useState('')

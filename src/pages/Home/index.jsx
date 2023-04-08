@@ -1,11 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import NavMenu from '../../components/Nav';
-
 import { FaArrowCircleRight, FaArrowCircleLeft, FaUserEdit } from 'react-icons/fa'
-import { FiMaximize2 } from 'react-icons/fi'
-
-
-import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
 import './home.css';
 import { ToastContainer, toast } from 'react-toastify'
 import { collection, doc, updateDoc, onSnapshot } from "firebase/firestore";
@@ -14,27 +9,30 @@ import { useContext } from 'react';
 import { UserContext } from '../../context/userContext';
 import Cards from '../../data/CardData'
 import NameToggle from '../../components/NameToggle';
-
+import { getAuth, getUserB } from 'firebase/auth';
 
 function Home() {
     console.log('Rederizou')
     const [cards, setCards] = useState([])
     const [isLoading, setIsLoading] = useState(true);
-    const { userName, setUserName, userId, setUserId } = useContext(UserContext)
+    const { userName, userId, isAdmin } = useContext(UserContext)
 
     async function goToFazendoTask(id) {
 
-        console.log(userId)
+
         const taskRef = doc(db, "tasks", id);
         updateDoc(taskRef, {
             status: 'Fazendo',
-            userGetting: userId
+            userGetting: userId,
+            userGettingName: userName
         });
 
         toast.info("Você agora é o encarregado da Tarefa!")
 
 
     }
+
+
     async function goToFeitoTask(id) {
         const taskRef = doc(db, "tasks", id);
         await updateDoc(taskRef, {
@@ -106,29 +104,28 @@ function Home() {
                     </div>
 
                     {
-                        isLoading || cards.filter((el) => el.status === "Fazendo").length == 0 ? (<p>Não há Tarefas Aqui!</p>) : cards.filter((el) => el.status === "Fazendo" && el.userGetting === userId).map((el) => (
-                            <div className="card">
-                                <h3>{el.title}</h3>
-                                <p>{el.description}</p>
-                                <div className="footer-card">
-                                    <div className="tags">
-                                        {el.tags?.map((el) => (
-                                            <small> {el}</small>
-                                        ))}
+                        isAdmin === true ?
+                            isLoading || cards.filter((el) => el.status === "Fazendo").length == 0 ? (<p>Não há Tarefas Aqui!</p>) : cards.filter((el) => el.status === "Fazendo").map((el) => (
+                                <div className="card">
+                                    <h3>{el.title}</h3>
+                                    <p>{el.description}</p>
+                                    <div className="footer-card">
+                                        <div className="tags">
+                                            {el.tags?.map((el) => (
+                                                <small> {el}</small>
+                                            ))}
+                                        </div>
+                                        <div className="buttons-card">
+                                            <button id='UserGetting'><FaUserEdit color='var(--text-primarycolor)' size={'30px'} /> {() => { handleGetnameUsers(el.userGettingName) }} { }</button>
+
+                                            <button type={'submit'} onClick={() => {
+                                                goToFeitoTask(el.id)
+                                            }} > <FaArrowCircleRight color='var(--text-primarycolor)' size={'30px'} /></button>
+                                        </div>
+
                                     </div>
-                                    <div className="buttons-card">
-                                        <button id='UserGetting'><FaUserEdit color='var(--text-primarycolor)' size={'30px'} /> {userName}</button>
-
-
-
-                                        <button type={'submit'} onClick={() => {
-                                            goToFeitoTask(el.id)
-                                        }} > <FaArrowCircleRight color='var(--text-primarycolor)' size={'30px'} /></button>
-                                    </div>
-
                                 </div>
-                            </div>
-                        ))
+                            )) : (<p>Não é admin</p>)
 
                     }
 

@@ -19,17 +19,18 @@ function NewTask() {
     const [tags, setTags] = useState(' ')
     const [status, setStatus] = useState('A Fazer')
     const [userGet, setUserGet] = useState(null)
+    const [userGetingName, setUserGetingName] = useState(null)
     const [cards, setCards] = useState([])
     const [isLoading, setIsLoading] = useState(true);
     const [showModdal, setShowModdal] = useState('')
-
+    const { isAdmin } = useContext(UserContext)
 
     function showModal() {
         let modalRef = document.querySelector('dialog')
         modalRef.style.display = 'none'
         const auth = getAuth();
         onAuthStateChanged(auth, (user) => {
-            if (!user || user.uid !== 'NybZqbYBOUXE2NpiRDOdAlA03vJ2') {
+            if (!user || isAdmin === false) {
                 let modalRef = document.querySelector('dialog')
                 modalRef.style.display = 'flex'
                 modalRef.showModal()
@@ -44,7 +45,7 @@ function NewTask() {
     const addTask = async () => {
         const tagsSplited = tags.split(' ')
         const taskCollectionRef = collection(db, 'tasks')
-        const createTask = await addDoc(taskCollectionRef, { title: title, description: description, repositorio: repo, tags: tagsSplited, status: status, userGetting: userGet })
+        const createTask = await addDoc(taskCollectionRef, { title: title, description: description, repositorio: repo, tags: tagsSplited, status: status, userGetting: userGet, userGettingName: userGetingName })
         if (createTask) {
             toast.success("Tarefa Criada com Sucesso!")
         }

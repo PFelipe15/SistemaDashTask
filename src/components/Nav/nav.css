@@ -55,7 +55,7 @@
     border-radius: 50%;
     width: 120px;
     height: 120px;
-    border: 3px solid #fff;
+
 }
 
 .moddalPefilLink {
@@ -98,7 +98,7 @@
 }
 
 .menu .menu-nav {
-    margin-top: 60px;
+    margin-top: 30px;
 
 }
 
@@ -161,33 +161,34 @@
 
 
 @media screen and (max-width: 768px) {
-    .menu #perfilId {
+    
+    .menu .menu-perfil {
         display: flex;
-        margin-top: 170px;
-        border-radius: 50%;
-        width: 100px;
-        height: 100px;
-        border: 3px solid #fff;
+
     }
 
-    .menu-header {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        align-items: center;
+    .menu .menu-perfil #perfilId {
+        width: 70px;
+        height: 70px;
     }
+
+    
 
     .menu {
-    
+        height: 100%;
+        width: auto;
         margin-left: auto;
         margin-right: auto;
         display: flex;
         flex-direction: column;
         justify-content: center;
-
+        gap: 20px;
     }
 
-
+    .menu .menu-nav {
+        margin: 0;
+        
+    }
 
     .menu-nav ul .toggleDesktop {
         display: none;

@@ -9,7 +9,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { FaCheckCircle } from 'react-icons/fa'
 import { BsFillPencilFill } from 'react-icons/bs'
 function NameToggle() {
-    const { userName, setUserName, userId, setUserId} = useContext(UserContext)
+    const { userName, setUserName, userId, setUserId, isAdmin, setIsAdmin } = useContext(UserContext)
     function habilityNameToggle() {
         let eltoggle = document.querySelector('.toggleNameInput')
         let elName = document.querySelector('#idName')
@@ -52,7 +52,15 @@ function NameToggle() {
             if (user) {
                 setUserName(user.displayName || 'Digite Seu Nome Aqui!');
                 setUserId(user.uid)
-            } else {
+                if (user.uid !== 'NybZqbYBOUXE2NpiRDOdAlA03vJ2') {
+                    setIsAdmin(false)
+                }
+                else{
+                    setIsAdmin(true)
+                }
+            }
+
+            else {
                 setUserName('Não encontrado');
             }
         });
@@ -71,14 +79,14 @@ function NameToggle() {
             <h1 id='idName'>{userName || 'not found'}</h1>
             <div className="toggleNameInput">
                 <input type="text" placeholder='Digite seu Nome!' value={userName} onChange={(e) => { setUserName(e.target.value) }} />
-                <button onClick={() => { getUser() }}> <FaCheckCircle size={30} color="var(--text-primarycolor)" /> </button>  
+                <button onClick={() => { getUser() }}> <FaCheckCircle size={30} color="var(--text-primarycolor)" /> </button>
             </div>
 
             <button id='idButtonPen' onClick={() => {
                 habilityNameToggle()
             }}>
 
-<BsFillPencilFill size={30} color="var(--text-primarycolor)" />
+                <BsFillPencilFill size={30} color="var(--text-primarycolor)" />
             </button>
 
             <ToastContainer />

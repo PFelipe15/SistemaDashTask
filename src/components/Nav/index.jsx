@@ -6,6 +6,7 @@ import tablet from '../../assets/Nav/tablet-portrait.svg'
 import people from '../../assets/Nav/people.svg'
 import cog from '../../assets/Nav/cog.svg'
 import perfil from '../../assets/perfil.jpg'
+import { TiThMenu } from 'react-icons/ti'
 import documentIcon from '../../assets/document.svg'
 import { ToastContainer, toast } from 'react-toastify';
 import { getAuth, onAuthStateChanged, updateProfile } from 'firebase/auth';
@@ -59,7 +60,6 @@ function NavMenu() {
         }
 
 
-
         let perfilRef = document.querySelector('.menu-perfil')
         let moddalRef = document.querySelector('.moddalPefilLink')
         perfilRef.style.display = 'flex'
@@ -88,7 +88,9 @@ function NavMenu() {
         <div className="menu">
             <div className="menu-header">
                 <div className="menu-perfil">
+
                     <img src={perfilPhoto || perfil} alt="teste" id="perfilId" />
+
                     <button id='btnModdal' onClick={() => {
                         showPefilModdal()
                     }}> <BiUserCircle size={30} color="#ffffff" /> </button>
@@ -106,8 +108,6 @@ function NavMenu() {
                     }}>Atualizar Foto</button>
                 </div>
             </div>
-
-
             <div className="menu-nav">
 
 
@@ -128,9 +128,11 @@ function NavMenu() {
                 </ul>
                 <span>Desenvolvido por Paulo Felipe</span>
             </div>
-
             <ToastContainer />
-        </div>);
+        </div>
+
+
+    );
 }
 
 export default NavMenu;

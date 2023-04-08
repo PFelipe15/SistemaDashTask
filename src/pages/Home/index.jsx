@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import NavMenu from '../../components/Nav';
-import { FaArrowCircleRight, FaArrowCircleLeft, FaUserEdit } from 'react-icons/fa'
+import { FaArrowCircleRight, FaArrowCircleLeft, FaUserEdit, FaUser } from 'react-icons/fa'
 import './home.css';
 import { ToastContainer, toast } from 'react-toastify'
 import { collection, doc, updateDoc, onSnapshot } from "firebase/firestore";
@@ -169,6 +169,7 @@ function Home() {
 
 
                                             <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}> <FaArrowCircleLeft color='var(--text-primarycolor)' size={'30px'} /></button>
+                                            <button type={'submit'}  > <FaUser color='var(--text-primarycolor)' size={'30px'} /> <span>{el.userGettingName}</span></button>
                                         </div>
                                     </div>
                                 </div>

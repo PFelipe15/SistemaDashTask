@@ -153,25 +153,44 @@ function Home() {
                 <div className='container-card'>
                     <h1>Feito</h1>
                     {
-                        isLoading ? (<p>Carregando</p>) : cards.filter((el) => el.status === "Feito").map((el) => (
-                            <div className="card">
-                                <h3>{el.title}</h3>
-                                <p>{el.description}</p>
-                                <div className="footer-card">
-                                    <div className="tags">
-                                        {el.tags?.map((el) => (
-                                            <small> {el}</small>
-                                        ))}
-                                    </div>
-                                    <div className="buttons-card">
+                        isAdmin === true ?
+                            isLoading ? (<p>Carregando</p>) : cards.filter((el) => el.status === "Feito").map((el) => (
+                                <div className="card">
+                                    <h3>{el.title}</h3>
+                                    <p>{el.description}</p>
+                                    <div className="footer-card">
+                                        <div className="tags">
+                                            {el.tags?.map((el) => (
+                                                <small> {el}</small>
+                                            ))}
+                                        </div>
+                                        <div className="buttons-card">
 
 
 
-                                        <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}> <FaArrowCircleLeft color='var(--text-primarycolor)' size={'30px'} /></button>
+                                            <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}> <FaArrowCircleLeft color='var(--text-primarycolor)' size={'30px'} /></button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))
+                            )) : isLoading ? (<p>Carregando</p>) : cards.filter((el) => el.status === "Feito" && el.userGetting === userId).map((el) => (
+                                <div className="card">
+                                    <h3>{el.title}</h3>
+                                    <p>{el.description}</p>
+                                    <div className="footer-card">
+                                        <div className="tags">
+                                            {el.tags?.map((el) => (
+                                                <small> {el}</small>
+                                            ))}
+                                        </div>
+                                        <div className="buttons-card">
+
+
+
+                                            <button type={'submit'} onClick={() => { goToFazendoTask(el.id) }}> <FaArrowCircleLeft color='var(--text-primarycolor)' size={'30px'} /></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
 
                     }
 

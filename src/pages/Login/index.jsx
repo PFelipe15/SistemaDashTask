@@ -25,14 +25,31 @@ function Login() {
         if (!email || !password) {
             return toast.warning("Dados não informados!");
         }
-        signInWithEmailAndPassword(email, password).then((user) => {
-            
+        signInWithEmailAndPassword(email, password)
+        if (error) {
+            return toast.error("Usuario não encontrado!")
+
+        }
+
+        if (loading) {
             toast.success("Bem Vindo!");
+        }
+
+
+        if (user) {
+            toast.success("Bem Vindo")
             setTimeout(() => {
 
                 navigate('/home')
+
             }, 1000)
-        }).catch(() => { return toast.error("Usuario não encontrado!") })
+
+
+        }
+
+
+
+
 
 
 
@@ -64,6 +81,8 @@ function Login() {
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 navigate('/home')
+
+
 
 
             }

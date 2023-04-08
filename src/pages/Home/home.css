@@ -192,6 +192,12 @@
 
  }
 
+.buttons-card button{
+  display: flex;
+  align-items: center;
+ 
+}
+ 
  .buttons-card #UserGetting {
    overflow-x: hidden;
 

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import NavMenu from '../../components/Nav';
-import { FaArrowCircleRight, FaArrowCircleLeft, FaUserEdit, FaUser } from 'react-icons/fa'
+import { FaArrowCircleRight, FaArrowCircleLeft, FaUserEdit, FaUser, FaClock } from 'react-icons/fa'
 import './home.css';
 import { ToastContainer, toast } from 'react-toastify'
 import { collection, doc, updateDoc, onSnapshot } from "firebase/firestore";
@@ -17,8 +17,6 @@ function Home() {
     const { userName, userId, isAdmin } = useContext(UserContext)
 
     async function goToFazendoTask(id) {
-
-
         const taskRef = doc(db, "tasks", id);
         updateDoc(taskRef, {
             status: 'Fazendo',
@@ -30,14 +28,20 @@ function Home() {
 
 
     }
-
-
+    async function goToAnaliseTask(id) {
+        const taskRef = doc(db, "tasks", id);
+        await updateDoc(taskRef, {
+            status: 'Em analise'
+        });
+        toast.success("Sua tarefa será analisada, caso seja aprovada avisaremos!")
+    }
+    //admin gestão
     async function goToFeitoTask(id) {
         const taskRef = doc(db, "tasks", id);
         await updateDoc(taskRef, {
             status: 'Feito'
         });
-        toast.success("Você Realizou a tarefa!")
+        toast.success("Você analisou a tarefa e deu como concluida!")
 
     }
     useEffect(() => {
@@ -101,7 +105,6 @@ function Home() {
                             {cards.filter((el) => el.status === "Fazendo" && el.userGetting === userId).length}
                         </h3>
                     </div>
-
                     {
                         isAdmin === true ?
                             isLoading || cards.filter((el) => el.status === "Fazendo").length == 0 ? (<p>Não há Tarefas Aqui!</p>) : cards.filter((el) => el.status === "Fazendo").map((el) => (
@@ -116,10 +119,6 @@ function Home() {
                                         </div>
                                         <div className="buttons-card">
                                             <button id='UserGetting'><FaUserEdit color='var(--text-primarycolor)' size={'30px'} /> {el.userGettingName}</button>
-
-                                            <button type={'submit'} onClick={() => {
-                                                goToFeitoTask(el.id)
-                                            }} > <FaArrowCircleRight color='var(--text-primarycolor)' size={'30px'} /></button>
                                         </div>
 
                                     </div>
@@ -138,7 +137,7 @@ function Home() {
                                             <button id='UserGetting'><FaUserEdit color='var(--text-primarycolor)' size={'30px'} /> {el.userGettingName}</button>
 
                                             <button type={'submit'} onClick={() => {
-                                                goToFeitoTask(el.id)
+                                                goToAnaliseTask(el.id)
                                             }} > <FaArrowCircleRight color='var(--text-primarycolor)' size={'30px'} /></button>
                                         </div>
 
@@ -150,6 +149,46 @@ function Home() {
 
                 </div>
 
+                <div className='container-card'>
+                    <h1>Em analise</h1>
+                    {
+                        isAdmin === true ?
+                            isLoading ? (<p>Carregando</p>) : cards.filter((el) => el.status === "Em analise").map((el) => (
+                                <div className="card">
+                                    <h3>{el.title}</h3>
+                                    <p>{el.description}</p>
+                                    <div className="footer-card">
+                                        <div className="tags">
+                                            {el.tags?.map((el) => (
+                                                <small> {el}</small>
+                                            ))}
+                                        </div>
+                                        <div className="buttons-card">
+                                            <button type={'submit'} onClick={() => { goToFeitoTask(el.id) }}> <FaArrowCircleRight color='var(--text-primarycolor)' size={'30px'} /></button>
+                                            <button type={'submit'}  > <FaUser color='var(--text-primarycolor)' size={'30px'} /> <span>{el.userGettingName}</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )) : isLoading ? (<p>Carregando</p>) : cards.filter((el) => el.status === "Em analise" && el.userGetting === userId).map((el) => (
+                                <div className="card">
+                                    <h3>{el.title}</h3>
+                                    <p>{el.description}</p>
+                                    <div className="footer-card">
+                                        <div className="tags">
+                                            {el.tags?.map((el) => (
+                                                <small> {el}</small>
+                                            ))}
+                                        </div>
+                                        <div className="buttons-card">
+                                            <button type={'submit'}> <FaClock color='var(--text-primarycolor)' size={'30px'}  /> <span>Processando...</span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+
+                    }
+
+                </div>
                 <div className='container-card'>
                     <h1>Feito</h1>
                     {

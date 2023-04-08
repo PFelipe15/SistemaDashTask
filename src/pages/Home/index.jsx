@@ -9,7 +9,6 @@ import { useContext } from 'react';
 import { UserContext } from '../../context/userContext';
 import Cards from '../../data/CardData'
 import NameToggle from '../../components/NameToggle';
-import { getAuth, getUserB } from 'firebase/auth';
 
 function Home() {
     console.log('Rederizou')
@@ -116,7 +115,7 @@ function Home() {
                                             ))}
                                         </div>
                                         <div className="buttons-card">
-                                            <button id='UserGetting'><FaUserEdit color='var(--text-primarycolor)' size={'30px'} /> {() => { handleGetnameUsers(el.userGettingName) }} { }</button>
+                                            <button id='UserGetting'><FaUserEdit color='var(--text-primarycolor)' size={'30px'} /> {el.userGettingName}</button>
 
                                             <button type={'submit'} onClick={() => {
                                                 goToFeitoTask(el.id)
@@ -125,7 +124,27 @@ function Home() {
 
                                     </div>
                                 </div>
-                            )) : (<p>Não é admin</p>)
+                            )) : isLoading || cards.filter((el) => el.status === "Fazendo").length == 0 ? (<p>Não há Tarefas Aqui!</p>) : cards.filter((el) => el.status === "Fazendo" && el.userGetting === userId).map((el) => (
+                                <div className="card">
+                                    <h3>{el.title}</h3>
+                                    <p>{el.description}</p>
+                                    <div className="footer-card">
+                                        <div className="tags">
+                                            {el.tags?.map((el) => (
+                                                <small> {el}</small>
+                                            ))}
+                                        </div>
+                                        <div className="buttons-card">
+                                            <button id='UserGetting'><FaUserEdit color='var(--text-primarycolor)' size={'30px'} /> {el.userGettingName}</button>
+
+                                            <button type={'submit'} onClick={() => {
+                                                goToFeitoTask(el.id)
+                                            }} > <FaArrowCircleRight color='var(--text-primarycolor)' size={'30px'} /></button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            ))
 
                     }
 
